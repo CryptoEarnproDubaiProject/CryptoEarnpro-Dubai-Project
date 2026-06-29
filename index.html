@@ -1,0 +1,2993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#00C896" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CryptoEarn" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="description" content="CryptoEarnPro — Dubai's #1 USDT Investment Platform | Daily 2.0%–2.5% Profit | Top 10 Global App by 2027" />
+  <title>CryptoEarn Pro</title>
+  <link rel="manifest" href="manifest.json" />
+  <!-- ── Custom Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='120' fill='%23060b18'/%3E%3Crect width='512' height='512' rx='120' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300C896'/%3E%3Cstop offset='1' stop-color='%230066ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='256' y='340' text-anchor='middle' font-size='280' fill='white' font-family='Arial'%3E%E2%82%BF%3C/text%3E%3C/svg%3E" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      height: 100%;
+      background: #060b18;
+      font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+      color: #dde8f5;
+      overscroll-behavior: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Light theme overrides ── */
+
+
+    /* ── Settings page ── */
+    .setting-row { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px 18px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .setting-row-left { display: flex; align-items: center; gap: 14px; }
+    .setting-icon { font-size: 24px; width: 40px; text-align: center; }
+    .setting-row-label { font-weight: 700; font-size: 15px; }
+    .setting-row-sub { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    /* Toggle switch */
+    .toggle { position: relative; width: 50px; height: 28px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: rgba(255,255,255,0.15); border-radius: 28px; transition: 0.3s; }
+    .toggle-slider:before { content: ''; position: absolute; height: 22px; width: 22px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s; }
+    .toggle input:checked + .toggle-slider { background: #00C896; }
+    .toggle input:checked + .toggle-slider:before { transform: translateX(22px); }
+    #app {
+      min-height: 100dvh;
+      min-height: -webkit-fill-available;
+      background: linear-gradient(135deg, #060b18 0%, #0a1020 60%, #080d1a 100%);
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+
+    /* Install Banner */
+    #install-banner {
+      position: fixed;
+      bottom: calc(80px + env(safe-area-inset-bottom) + 12px);
+      left: 12px; right: 12px;
+      background: linear-gradient(135deg, #0d2d24, #0a1835);
+      border: 1px solid rgba(0,200,150,0.35);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 9999;
+      box-shadow: 0 8px 32px rgba(0,200,150,0.2);
+      animation: slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    #install-banner.hidden { display: none; }
+    @keyframes slideUp { from { transform: translateY(120%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .install-icon { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #00C896, #0066ff); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .install-text { flex: 1; }
+    .install-text strong { display: block; font-size: 14px; color: #fff; }
+    .install-text span { font-size: 11px; color: rgba(255,255,255,0.5); }
+    .install-btn { background: linear-gradient(135deg, #00C896, #0066ff); border: none; color: #fff; border-radius: 10px; padding: 9px 16px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; }
+    .install-close { background: none; border: none; color: rgba(255,255,255,0.3); font-size: 18px; cursor: pointer; padding: 4px; flex-shrink: 0; }
+
+    /* iOS Install Guide */
+    #ios-guide { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9998; display: flex; align-items: flex-end; padding: 16px; }
+    #ios-guide.hidden { display: none; }
+    .ios-card { background: #0f1a2e; border: 1px solid rgba(0,200,150,0.3); border-radius: 20px; padding: 24px 20px; width: 100%; }
+    .ios-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .ios-card p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+    .ios-steps { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+    .ios-step { display: flex; align-items: center; gap: 12px; }
+    .ios-step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(0,200,150,0.15); border: 1px solid rgba(0,200,150,0.4); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #00C896; flex-shrink: 0; }
+    .ios-step-text { font-size: 14px; color: rgba(255,255,255,0.8); }
+    .ios-step-text strong { color: #fff; }
+    .ios-arrow { text-align: center; font-size: 28px; animation: bounce 1.2s infinite; margin-bottom: 16px; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+    .ios-dismiss { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); border-radius: 12px; padding: 12px; font-size: 14px; cursor: pointer; }
+
+    /* Notification */
+    #notif { position: fixed; top: max(20px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); padding: 12px 22px; border-radius: 14px; z-index: 9997; font-weight: 600; font-size: 14px; max-width: 88vw; text-align: center; transition: opacity 0.3s; box-shadow: 0 4px 24px rgba(0,0,0,0.3); pointer-events: none; }
+    #notif.hidden { opacity: 0; }
+
+    /* Header */
+    #header { background: rgba(6,11,24,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 12px 16px; padding-top: calc(12px + env(safe-area-inset-top)); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .header-logo { display: flex; align-items: center; gap: 9px; }
+    .logo-icon { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #00C896, #0066ff); display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800; color: #fff; }
+    .logo-name { font-weight: 700; font-size: 15px; }
+    .logo-live { font-size: 10px; color: #00C896; }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .badge-green { background: rgba(0,200,150,0.1); border: 1px solid rgba(0,200,150,0.25); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: #00C896; font-weight: 600; }
+    .badge-admin { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: #f59e0b; font-weight: 700; }
+    .badge-red { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: #ef4444; font-weight: 600; cursor: pointer; }
+
+    /* Page */
+    .page { max-width: 480px; margin: 0 auto; padding: 0 16px; }
+
+    /* Cards */
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 20px 18px; }
+
+    /* Forms */
+    .input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 14px 16px; color: #fff; font-size: 16px; outline: none; -webkit-appearance: none; font-family: inherit; }
+    .input:focus { border-color: rgba(0,200,150,0.5); }
+    .input::placeholder { color: rgba(255,255,255,0.25); }
+    select.input { cursor: pointer; }
+    .label { font-size: 13px; color: rgba(255,255,255,0.55); display: block; margin-bottom: 8px; }
+    .err { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; color: #ef4444; font-size: 13px; font-weight: 500; }
+
+    /* Buttons */
+    .btn-primary { width: 100%; background: linear-gradient(135deg, #00C896, #0066ff); border: none; color: #fff; border-radius: 14px; padding: 16px 0; font-weight: 800; font-size: 16px; cursor: pointer; letter-spacing: 0.3px; font-family: inherit; -webkit-appearance: none; transition: opacity 0.15s; }
+    .btn-primary:active { opacity: 0.8; transform: scale(0.99); }
+    .btn-orange { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .btn-purple { background: linear-gradient(135deg, #6c63ff, #3b82f6); }
+
+    /* Balance card */
+    .balance-card { background: linear-gradient(135deg, #00C896 0%, #0057e7 100%); border-radius: 22px; padding: 24px 20px; position: relative; overflow: hidden; margin-top: 22px; }
+    .balance-card::after { content: ''; position: absolute; right: -20px; top: -20px; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.08); }
+    .balance-label { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 5px; }
+    .balance-amount { font-size: 44px; font-weight: 800; color: #fff; letter-spacing: -2px; }
+    .balance-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+    .balance-actions { display: flex; gap: 12px; margin-top: 18px; }
+    .balance-btn { flex: 1; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 12px; padding: 11px 0; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit; }
+    .balance-btn:active { opacity: 0.8; }
+
+    /* Stats grid */
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    .stat-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 16px; }
+    .stat-icon { font-size: 22px; }
+    .stat-value { font-size: 22px; font-weight: 800; margin-top: 6px; }
+    .stat-name { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .stat-sub { font-size: 11px; margin-top: 2px; }
+
+    /* Bottom nav */
+    #bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(6,11,24,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.07); display: flex; justify-content: space-around; padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 100; }
+    .nav-item { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 10px; min-width: 56px; transition: opacity 0.2s; }
+    .nav-item.active { opacity: 1; }
+    .nav-item:not(.active) { opacity: 0.4; }
+    .nav-icon { font-size: 22px; }
+    .nav-label { font-size: 9px; font-weight: 600; }
+    .nav-item.active .nav-label { color: #00C896; }
+    .nav-dot { width: 4px; height: 4px; border-radius: 50%; background: #00C896; }
+
+    /* Auth screen */
+    .auth-wrap { min-height: 100dvh; min-height: -webkit-fill-available; background: linear-gradient(135deg, #060b18 0%, #0a1020 60%, #080d1a 100%); display: flex; align-items: center; justify-content: center; padding: 20px 16px; padding-top: calc(20px + env(safe-area-inset-top)); }
+    .auth-inner { width: 100%; max-width: 420px; }
+    .auth-logo { text-align: center; margin-bottom: 32px; }
+    .auth-logo-icon { width: 68px; height: 68px; border-radius: 20px; background: linear-gradient(135deg, #00C896, #0066ff); display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 12px; box-shadow: 0 8px 32px rgba(0,200,150,0.3); }
+    .auth-title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+    .auth-subtitle { font-size: 13px; color: #00C896; margin-top: 4px; }
+    .tab-switcher { display: flex; background: rgba(255,255,255,0.05); border-radius: 14px; padding: 4px; margin-bottom: 22px; }
+    .tab-btn { flex: 1; border: none; border-radius: 11px; padding: 11px 0; font-weight: 700; font-size: 15px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+    .tab-btn.active { background: linear-gradient(135deg, #00C896, #0066ff); color: #fff; }
+    .tab-btn:not(.active) { background: none; color: rgba(255,255,255,0.5); }
+
+    /* Progress bar */
+    .progress-track { background: rgba(255,255,255,0.08); border-radius: 99px; height: 5px; margin-bottom: 24px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #00C896); border-radius: 99px; transition: width 0.4s; }
+
+    /* TX Row */
+    .tx-row { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 13px 15px; margin-bottom: 9px; cursor:pointer; transition: background 0.2s; }
+    .tx-row:hover { background: rgba(255,255,255,0.07); }
+    .tx-detail-modal { position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9999; display:flex; align-items:flex-end; justify-content:center; animation: fadeIn 0.2s; }
+    .tx-detail-sheet { background:#1a1a2e; border-radius:24px 24px 0 0; width:100%; max-width:480px; padding:24px 20px 40px; max-height:85vh; overflow-y:auto; animation: slideUp 0.25s ease; }
+    @keyframes slideUp { from { transform:translateY(100%); opacity:0; } to { transform:translateY(0); opacity:1; } }
+    .tx-detail-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .tx-detail-label { font-size:13px; color:rgba(255,255,255,0.45); }
+    .tx-detail-value { font-size:13px; font-weight:600; color:#fff; text-align:right; max-width:60%; word-break:break-all; }
+    .tx-inner { display: flex; justify-content: space-between; align-items: center; }
+    .tx-left { display: flex; align-items: center; gap: 10px; }
+    .tx-icon { width: 38px; height: 38px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+    .tx-icon.out { background: rgba(239,68,68,0.12); }
+    .tx-icon.in { background: rgba(0,200,150,0.12); }
+    .tx-type { font-size: 13px; font-weight: 600; text-transform: capitalize; }
+    .tx-date { font-size: 11px; color: rgba(255,255,255,0.35); }
+    .tx-amount { font-weight: 700; font-size: 15px; text-align: right; }
+    .tx-amount.out { color: #ef4444; }
+    .tx-amount.in { color: #00C896; }
+    .tx-status { font-size: 10px; padding: 2px 9px; border-radius: 20px; margin-top: 3px; display: inline-block; }
+    .tx-status.ok { background: rgba(0,200,150,0.12); color: #00C896; }
+    .tx-status.pending { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .tx-hash { margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.25); background: rgba(0,0,0,0.2); border-radius: 8px; padding: 5px 10px; }
+
+    /* Deposit address */
+    .addr-box { background: rgba(0,200,150,0.07); border: 1px solid rgba(0,200,150,0.3); border-radius: 16px; padding: 18px; margin-bottom: 20px; }
+    .addr-label { font-size: 11px; color: #00C896; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+    .addr-text { background: rgba(0,0,0,0.35); border-radius: 10px; padding: 12px 14px; font-size: 12px; word-break: break-all; color: #e0e8f0; letter-spacing: 0.5px; line-height: 1.6; }
+    .copy-btn { margin-top: 12px; width: 100%; background: rgba(0,200,150,0.12); border: 1px solid rgba(0,200,150,0.4); color: #00C896; border-radius: 10px; padding: 11px 0; font-weight: 600; font-size: 13px; cursor: pointer; font-family: inherit; }
+    .copy-btn.copied { background: rgba(0,200,150,0.25); }
+
+    /* Info boxes */
+    .info-yellow { background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.2); border-radius: 12px; padding: 16px; margin-top: 18px; }
+    .info-yellow-title { font-weight: 700; color: #f59e0b; font-size: 13px; margin-bottom: 8px; }
+    .info-yellow-body { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.9; }
+    .info-red { background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.15); border-radius: 12px; padding: 14px; margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.9; }
+
+    /* Row */
+    .row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .row-label { font-size: 13px; color: rgba(255,255,255,0.55); }
+    .row-value { font-weight: 700; color: #00C896; }
+
+    /* Available balance */
+    .avail-balance { background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.25); border-radius: 14px; padding: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+
+    /* Referral */
+    .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .ref-card { border-radius: 16px; padding: 18px; text-align: center; }
+    .ref-pct { font-size: 28px; font-weight: 800; }
+    .ref-code-box { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 10px 14px; font-size: 15px; font-weight: 800; color: #00C896; letter-spacing: 2px; margin-bottom: 10px; }
+    .ref-link { font-size: 12px; color: rgba(255,255,255,0.3); margin-bottom: 14px; word-break: break-all; }
+    .ref-btns { display: flex; gap: 10px; }
+    .ref-btn { flex: 1; border-radius: 10px; padding: 11px 0; font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit; }
+    .wa-preview { background: rgba(37,211,102,0.06); border: 1px solid rgba(37,211,102,0.2); border-radius: 14px; padding: 16px; margin-bottom: 20px; }
+    .wa-title { font-size: 12px; color: #25D366; font-weight: 700; margin-bottom: 8px; }
+    .wa-body { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; font-family: monospace; }
+
+    /* Profit plan */
+    .profit-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+    /* Misc */
+    .link-btn { background: none; border: none; color: #00C896; font-size: 12px; cursor: pointer; font-weight: 600; font-family: inherit; }
+    .section-title { font-weight: 800; font-size: 22px; margin-bottom: 4px; margin-top: 22px; }
+    .section-sub { color: rgba(255,255,255,0.45); font-size: 13px; margin-bottom: 22px; }
+    .mb14 { margin-bottom: 14px; }
+    .mt14 { margin-top: 14px; }
+    .mt16 { margin-top: 16px; }
+    .mt20 { margin-top: 20px; }
+    .mb20 { margin-bottom: 20px; }
+    .mb22 { margin-bottom: 22px; }
+    .pos-rel { position: relative; }
+    .eye-btn { position: absolute; right: 14px; top: 38px; background: none; border: none; color: rgba(255,255,255,0.4); cursor: pointer; font-size: 17px; }
+    .center { text-align: center; }
+    .demo-hint { text-align: center; margin-top: 14px; font-size: 11px; color: rgba(255,255,255,0.3); }
+    .back-btn { width: 100%; background: none; border: none; color: rgba(255,255,255,0.35); font-size: 13px; cursor: pointer; margin-top: 16px; padding: 8px 0; font-family: inherit; }
+    .fp-step-info { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .security-hint { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 5px; }
+    .warn-hint { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 6px; }
+    .empty-state { text-align: center; padding: 40px 0; color: rgba(255,255,255,0.3); font-size: 14px; }
+    .card-green { border-color: rgba(0,200,150,0.2) !important; }
+    .card-purple { border-color: rgba(108,99,255,0.25) !important; }
+
+    /* ── ADMIN PANEL styles ── */
+    .admin-banner {
+      background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(239,68,68,0.1));
+      border: 1px solid rgba(245,158,11,0.4);
+      border-radius: 16px; padding: 16px 18px; margin-top: 16px; margin-bottom: 4px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .admin-badge-large { font-size: 28px; }
+    .admin-title { font-size: 18px; font-weight: 800; color: #f59e0b; }
+    .admin-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .admin-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .admin-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; text-align: center; }
+    .admin-stat-val { font-size: 26px; font-weight: 800; color: #00C896; }
+    .admin-stat-lbl { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .admin-user-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
+    .admin-user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .admin-user-name { font-size: 15px; font-weight: 700; color: #fff; }
+    .admin-user-email { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .admin-user-bal { font-size: 20px; font-weight: 800; color: #00C896; }
+    .admin-user-bal-lbl { font-size: 10px; color: rgba(255,255,255,0.35); text-align: right; }
+    .admin-user-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 12px; }
+    .admin-user-row:last-child { border-bottom: none; }
+    .admin-user-row-lbl { color: rgba(255,255,255,0.4); }
+    .admin-user-row-val { font-weight: 600; color: rgba(255,255,255,0.8); }
+    .admin-section-title { font-size: 16px; font-weight: 800; margin: 18px 0 12px; color: #f59e0b; }
+    .admin-search { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 15px; outline: none; font-family: inherit; margin-bottom: 14px; }
+    .admin-search::placeholder { color: rgba(255,255,255,0.25); }
+    .admin-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+    .admin-tab { border: none; border-radius: 20px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; font-family: inherit; }
+    .admin-tab.active { background: rgba(245,158,11,0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.4); }
+    .admin-tab:not(.active) { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4); border: 1px solid transparent; }
+    .admin-action-btn { border: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit; margin-left: 6px; }
+    .btn-approve { background: rgba(0,200,150,0.2); color: #00C896; border: 1px solid rgba(0,200,150,0.4); }
+    .btn-reject { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid rgba(239,68,68,0.4); }
+    .btn-deduct { background: rgba(245,158,11,0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.4); }
+    .pending-tx-card { background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.2); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
+    .pending-tx-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .pending-tx-user { font-size: 13px; font-weight: 700; color: #fff; }
+    .pending-tx-email { font-size: 11px; color: rgba(255,255,255,0.35); }
+    .pending-tx-amt { font-size: 18px; font-weight: 800; color: #f59e0b; }
+    .pending-tx-type { font-size: 10px; color: rgba(255,255,255,0.35); text-align: right; }
+    .pending-tx-actions { display: flex; justify-content: flex-end; margin-top: 10px; }
+
+    /* ── SPLASH SCREEN ── */
+    #splash {
+      position: fixed; inset: 0; z-index: 99999;
+      background: radial-gradient(ellipse at 30% 20%, #0d1f3c 0%, #060b18 50%, #020508 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    #splash.hide { opacity: 0; transform: scale(1.05); pointer-events: none; }
+    .splash-particles { position: absolute; inset: 0; overflow: hidden; }
+    .splash-particle {
+      position: absolute; border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+    .splash-logo-wrap {
+      position: relative; display: flex; flex-direction: column; align-items: center;
+      animation: splashIn 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes splashIn {
+      from { opacity: 0; transform: scale(0.5) translateY(30px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .splash-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(0,200,150,0.3);
+      animation: ringPulse 2s ease-out infinite;
+    }
+    @keyframes ringPulse {
+      0%   { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+    .splash-logo-icon {
+      width: 110px; height: 110px; border-radius: 30px;
+      background: linear-gradient(135deg, #00C896 0%, #0057e7 50%, #7c3aed 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 54px; font-weight: 900; color: #fff;
+      box-shadow: 0 20px 60px rgba(0,200,150,0.4), 0 0 100px rgba(0,87,231,0.2);
+      position: relative; z-index: 2;
+    }
+    .splash-logo-icon svg { width: 62px; height: 62px; }
+    .splash-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px; font-weight: 900;
+      background: linear-gradient(90deg, #00C896, #0099ff, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 20px; letter-spacing: 2px;
+      animation: shimmer 3s linear infinite;
+      background-size: 200% auto;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    .splash-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 3px; text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .splash-loader {
+      width: 200px; height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px; margin-top: 48px;
+      overflow: hidden;
+    }
+    .splash-loader-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00C896, #0099ff, #f59e0b);
+      border-radius: 99px;
+      animation: loadFill 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    @keyframes loadFill {
+      0%   { width: 0%; }
+      60%  { width: 75%; }
+      85%  { width: 90%; }
+      100% { width: 100%; }
+    }
+    .splash-version {
+      position: absolute; bottom: 40px;
+      font-size: 11px; color: rgba(255,255,255,0.2);
+      letter-spacing: 1px;
+    }
+
+    /* ── ENHANCED LOGO in header ── */
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #00C896, #0057e7);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: #fff;
+      box-shadow: 0 4px 14px rgba(0,200,150,0.35);
+    }
+    .logo-text-main {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px; font-weight: 800;
+      background: linear-gradient(90deg, #00C896, #0099ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; letter-spacing: 0.5px;
+    }
+    .logo-text-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 10px; color: rgba(255,255,255,0.4);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    /* ── GOLD LUXURY ACCENTS ── */
+    .gold-badge {
+      background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.05));
+      border: 1px solid rgba(245,158,11,0.4);
+      color: #f59e0b; border-radius: 20px; padding: 4px 12px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    }
+    .balance-amount { font-family: 'Orbitron', sans-serif; }
+    .section-title  { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── ICON ANIMATIONS ── */
+    @keyframes iconPop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+    .nav-item.active .nav-icon { animation: iconPop 0.3s ease; }
+
+    @keyframes cardSlideIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card { animation: cardSlideIn 0.35s ease both; }
+    .stat-card { animation: cardSlideIn 0.35s ease both; }
+
+    /* ── SHIMMER on balance card ── */
+    .balance-card::before {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      animation: balanceShimmer 4s ease infinite;
+    }
+    @keyframes balanceShimmer {
+      0%   { left: -100%; }
+      50%  { left: 150%; }
+      100% { left: 150%; }
+    }
+
+    /* ── PULSE on profit badge ── */
+    @keyframes profitPulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(0,200,150,0.4); }
+      50%     { box-shadow: 0 0 0 8px rgba(0,200,150,0); }
+    }
+    .badge-green { animation: profitPulse 2.5s ease infinite; }
+
+    /* ── CRYPTO TICKER animation ── */
+    .crypto-ticker {
+      background: rgba(0,200,150,0.05);
+      border-top: 1px solid rgba(0,200,150,0.12);
+      border-bottom: 1px solid rgba(0,200,150,0.12);
+      padding: 8px 0; overflow: hidden; white-space: nowrap;
+      margin-bottom: 16px;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: tickerScroll 25s linear infinite;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.55);
+    }
+    @keyframes tickerScroll {
+      from { transform: translateX(100vw); }
+      to   { transform: translateX(-100%); }
+    }
+    .ticker-item { margin-right: 48px; }
+    .ticker-up   { color: #00C896; }
+    .ticker-down { color: #ef4444; }
+  </style>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCEdeiAoMGUgMYeZSWVKoiGe1sNXUd7OcA",
+      authDomain: "cryptoearnpro-5207e.firebaseapp.com",
+      projectId: "cryptoearnpro-5207e",
+      storageBucket: "cryptoearnpro-5207e.firebasestorage.app",
+      messagingSenderId: "466932256964",
+      appId: "1:466932256964:web:f4d42f51132b7c62353991"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    window._fbAuth = getAuth(app);
+    window._fbDb = getFirestore(app);
+    window._fbFns = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, doc, setDoc, getDoc, updateDoc, collection, getDocs, deleteDoc };
+    window._firebaseReady = true;
+    console.log("Firebase ready");
+  </script>
+</head>
+<body>
+
+<!-- ══════════════ SPLASH SCREEN ══════════════ -->
+<div id="splash">
+  <div class="splash-particles" id="splash-particles"></div>
+  <div class="splash-logo-wrap">
+    <div class="splash-ring" style="width:140px;height:140px;margin-left:-70px;margin-top:-70px;top:50%;left:50%;position:absolute;animation-delay:0s"></div>
+    <div class="splash-ring" style="width:140px;height:140px;margin-left:-70px;margin-top:-70px;top:50%;left:50%;position:absolute;animation-delay:0.7s"></div>
+    <div class="splash-logo-icon">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="28" fill="rgba(255,255,255,0.08)"/>
+        <text x="32" y="44" text-anchor="middle" font-size="36" fill="white" font-family="Arial" font-weight="bold">₿</text>
+        <circle cx="48" cy="16" r="6" fill="#f59e0b"/>
+        <path d="M46 16 L48 14 L50 16 L48 18 Z" fill="white"/>
+      </svg>
+    </div>
+    <div class="splash-title">CRYPTOEARN</div>
+    <div class="splash-sub">PRO · USDT Investment</div>
+    <div class="splash-loader"><div class="splash-loader-fill"></div></div>
+  </div>
+  <div class="splash-version">v8.0 · Secure Edition</div>
+</div>
+
+<!-- INSTALL BANNER -->
+<div id="install-banner" class="hidden">
+  <div class="install-icon">₿</div>
+  <div class="install-text">
+    <strong>Install CryptoEarn Pro</strong>
+    <span>Add to Home Screen for quick access</span>
+  </div>
+  <button class="install-btn" onclick="doInstall()">Install</button>
+  <button class="install-close" onclick="dismissInstall()">✕</button>
+</div>
+
+<!-- iOS INSTALL GUIDE -->
+<div id="ios-guide" class="hidden" onclick="document.getElementById('ios-guide').classList.add('hidden')">
+  <div class="ios-card" onclick="event.stopPropagation()">
+    <h3>📲 Install on iPhone</h3>
+    <p>Add CryptoEarn Pro to your Home Screen like a real app</p>
+    <div class="ios-steps">
+      <div class="ios-step"><div class="ios-step-num">1</div><div class="ios-step-text">Tap the <strong>Share</strong> button at the bottom of Safari</div></div>
+      <div class="ios-step"><div class="ios-step-num">2</div><div class="ios-step-text">Scroll down and tap <strong>"Add to Home Screen"</strong></div></div>
+      <div class="ios-step"><div class="ios-step-num">3</div><div class="ios-step-text">Tap <strong>"Add"</strong> — done! Open like any app</div></div>
+    </div>
+    <div class="ios-arrow">⬇️</div>
+    <button class="ios-dismiss" onclick="document.getElementById('ios-guide').classList.add('hidden')">Got it</button>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div id="notif" class="hidden"></div>
+
+<!-- APP ROOT -->
+<div id="app"></div>
+
+<script>
+// ─── Constants ────────────────────────────────────────────────────────────────
+const MIN_DEPOSIT    = 6;
+const MIN_WITHDRAW   = 0.5;
+
+// Plan-based daily profit rates
+const PLANS = [
+  { name: 'Plan 1', min: 6,  max: 20,      rate: 0.020, label: '2.0%', color: '#00C896' },
+  { name: 'Plan 2', min: 21, max: 50,      rate: 0.023, label: '2.3%', color: '#6c63ff' },
+  { name: 'Plan 3', min: 51, max: Infinity, rate: 0.025, label: '2.5%', color: '#f59e0b' },
+];
+function getPlan(balance) {
+  if (balance <= 0) return PLANS[0];
+  return PLANS.find(p => balance >= p.min && balance <= p.max) || PLANS[2];
+}
+function getDailyProfit(balance) {
+  return balance * getPlan(balance).rate;
+}
+
+const WITHDRAW_TAX = 0.07; // 7% fee on withdrawal
+
+// Referral commission rate — applied to referral's DAILY PROFIT (not deposit)
+const REFERRAL_L1_RATE = 0.10; // Level 1 — 10% of direct referral's daily profit
+const REFERRAL_L2_RATE = 0.05; // Level 2 — 5% of sub-referral's daily profit
+
+// 50% of each deposit is locked for 15 days; 50% is freely withdrawable
+const DEPOSIT_LOCK_DAYS = 15;
+const DEPOSIT_LOCK_RATIO = 0.5; // 50% locked
+
+// Compute how much balance is currently locked (deposits within 15 days)
+function computeLockedBalance(u) {
+  if (!u.depositLocks || u.depositLocks.length === 0) return 0;
+  const today = getTodayDate();
+  let locked = 0;
+  u.depositLocks.forEach(lock => {
+    if (lock.unlockDate > today) locked += lock.amount;
+  });
+  return parseFloat(locked.toFixed(2));
+}
+
+// Subscribe user to plan
+function subscribePlan(planIndex) {
+  const u = users[currentUser.email];
+  if (!u || u.balance <= 0) return showNotif('Please deposit first to subscribe a plan', 'error');
+  const plan = PLANS[planIndex];
+  if (u.balance < plan.min) return showNotif(`Minimum $${plan.min} balance required for this plan`, 'error');
+  if (plan.max !== Infinity && u.balance > plan.max) return showNotif(`Balance must not exceed $${plan.max} for this plan`, 'error');
+  const now = Date.now();
+  u.subscribedPlan = planIndex;
+  u.subscribeDate = now;
+  u.lastProfitClaim = now;
+  currentUser.subscribedPlan = planIndex;
+  currentUser.subscribeDate = now;
+  currentUser.lastProfitClaim = now;
+  saveUsers();
+  showNotif(`✅ ${plan.name} subscribed! Daily profit: $${getDailyProfit(u.balance).toFixed(2)}`);
+  render();
+}
+
+// Check and add pending profit
+async function checkAndAddProfit() {
+  const u = users[currentUser.email];
+  if (!u || u.subscribedPlan === null || u.subscribedPlan === undefined) return;
+  const now = Date.now();
+  const last = u.lastProfitClaim || u.subscribeDate || now;
+  const msPassed = now - last;
+  const daysPassed = Math.floor(msPassed / (1000 * 60 * 60 * 24));
+  if (daysPassed < 1) return;
+  const plan = PLANS[u.subscribedPlan];
+  if (!plan) return;
+  const dailyProfit = u.balance * plan.rate;
+  const totalProfit = dailyProfit * daysPassed;
+  u.balance = (u.balance || 0) + totalProfit;
+  u.totalProfit = (u.totalProfit || 0) + totalProfit;
+  u.lastProfitClaim = last + daysPassed * 24 * 60 * 60 * 1000;
+  for (let d = 0; d < daysPassed; d++) {
+    const profitDate = new Date(last + (d + 1) * 24 * 60 * 60 * 1000);
+    u.transactions = u.transactions || [];
+    u.transactions.unshift({
+      id: Date.now() + d,
+      type: 'profit',
+      amount: parseFloat(dailyProfit.toFixed(2)),
+      date: profitDate.toISOString().split('T')[0],
+      status: 'credited',
+      txHash: '-'
+    });
+
+    // Level 1 — 10% commission to direct referrer
+    const normReferredBy = u.referredBy ? u.referredBy.toLowerCase().trim() : null;
+    if (normReferredBy && users[normReferredBy]) {
+      const l1 = users[normReferredBy];
+      const l1comm = parseFloat((dailyProfit * REFERRAL_L1_RATE).toFixed(4));
+      if (l1comm > 0) {
+        l1.balance = (l1.balance || 0) + l1comm;
+        l1.totalProfit = (l1.totalProfit || 0) + l1comm;
+        l1.transactions = l1.transactions || [];
+        l1.transactions.unshift({
+          id: Date.now() + d + 1000,
+          type: 'referral',
+          amount: l1comm,
+          date: profitDate.toISOString().split('T')[0],
+          status: 'credited',
+          txHash: '-',
+          note: `L1 commission (10%) from ${u.name}'s daily profit`
+        });
+        const refEntry1 = (l1.referrals || []).find(r => r.name === u.name);
+        if (refEntry1) refEntry1.commission = (refEntry1.commission || 0) + l1comm;
+      }
+      // Level 2 — 5% commission to referrer's referrer
+      const normL1ReferredBy = l1.referredBy ? l1.referredBy.toLowerCase().trim() : null;
+      if (normL1ReferredBy && users[normL1ReferredBy]) {
+        const l2 = users[normL1ReferredBy];
+        const l2comm = parseFloat((dailyProfit * REFERRAL_L2_RATE).toFixed(4));
+        if (l2comm > 0) {
+          l2.balance = (l2.balance || 0) + l2comm;
+          l2.totalProfit = (l2.totalProfit || 0) + l2comm;
+          l2.transactions = l2.transactions || [];
+          l2.transactions.unshift({
+            id: Date.now() + d + 2000,
+            type: 'referral',
+            amount: l2comm,
+            date: profitDate.toISOString().split('T')[0],
+            status: 'credited',
+            txHash: '-',
+            note: `L2 commission (5%) from ${u.name}'s daily profit`
+          });
+          const refEntry2 = (l2.referrals || []).find(r => r.name === l1.name);
+          if (refEntry2) refEntry2.commission = (refEntry2.commission || 0) + l2comm;
+        }
+      }
+    }
+  }
+  currentUser.balance = u.balance;
+  currentUser.totalProfit = u.totalProfit;
+  currentUser.transactions = u.transactions;
+  currentUser.lastProfitClaim = u.lastProfitClaim;
+
+  // Save current user to Firebase
+  await _saveUserToFirestore(currentUser.email, u);
+
+  // Save L1 referrer to Firebase
+  const _nb = normReferredBy;
+  if (_nb && users[_nb]) {
+    await _saveUserToFirestore(_nb, users[_nb]);
+    // Save L2 referrer to Firebase
+    const l1 = users[_nb];
+    const normL1rb = l1.referredBy ? l1.referredBy.toLowerCase().trim() : null;
+    if (normL1rb && users[normL1rb]) {
+      await _saveUserToFirestore(normL1rb, users[normL1rb]);
+    }
+  }
+
+  try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+  showNotif(`💰 $${totalProfit.toFixed(2)} daily profit has been credited!`);
+}
+
+// Time remaining for next profit (in seconds)
+function getNextProfitSeconds() {
+  const u = users[currentUser.email];
+  if (!u || u.subscribedPlan === null || u.subscribedPlan === undefined) return null;
+  const last = u.lastProfitClaim || u.subscribeDate || Date.now();
+  const nextClaim = last + 24 * 60 * 60 * 1000;
+  const remaining = nextClaim - Date.now();
+  return remaining > 0 ? Math.floor(remaining / 1000) : 0;
+}
+const DEPOSIT_ADDRESS = "0x2c31f7b60ecb741b549968227e7cfb76e3764950";
+const APP_URL        = "https://verdant-froyo-8e791d.netlify.app";
+// Admin credentials — hardcoded as hashes only (asli email/password file mein nahi)
+const _ADMIN_EMAIL_HASH = 'eaab503946abcf894a7edf7dfc58a9fe65397c8ca5c2bb206d63b47b98a4d31a';
+const _ADMIN_HASH       = '0e34946b49e2dcf1c44a5b48df8912ba315231c914114c97d516c876ea706e72';
+
+// Lightweight checksum
+function _makeHash(data) {
+  const s = JSON.stringify(data);
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h * 0x01000193) >>> 0; }
+  return h.toString(16);
+}
+
+// SHA-256 helper (email/password verify ke liye)
+async function _sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+
+
+// ─── Default Users ────────────────────────────────────────────────────────────
+let users = {
+  // Admin user yahan nahi hoga - Firebase se load hoga
+  "demo@gmail.com": {
+    password: "demo123", name: "Demo User",
+    balance: 250.00, totalProfit: 48.80,
+    totalDeposit: 200.00, totalWithdrawn: 0,
+    subscribedPlan: null, subscribeDate: null, lastProfitClaim: null,
+    referralCode: "DEMO7927", referredBy: null,
+    referrals: [
+      { name: "Ali Hassan", level: 1, deposit: 100, commission: 5.0 },
+      { name: "Raza Khan", level: 1, deposit: 50, commission: 2.5 }
+    ],
+    transactions: [
+      { id: 1, type: "deposit",  amount: 100, date: "2026-06-01", status: "confirmed", txHash: "0xabc...123" },
+      { id: 2, type: "profit",   amount: 1.6, date: "2026-06-02", status: "credited",  txHash: "-" },
+      { id: 3, type: "deposit",  amount: 100, date: "2026-06-03", status: "confirmed", txHash: "0xdef...456" },
+      { id: 4, type: "withdraw", amount: 20,  date: "2026-06-05", status: "pending",   txHash: "0xghi...789" },
+      { id: 5, type: "referral", amount: 5.0, date: "2026-06-06", status: "credited",  txHash: "-" }
+    ]
+  },
+};
+
+// ─── Persistence (Firebase Firestore) ────────────────────────────────────────
+function saveUsers() {
+  try {
+    localStorage.setItem('ce_users_cache', JSON.stringify(users));
+  } catch(e){}
+  // Save current user to Firestore only (not all users)
+  if (currentUser && currentUser.email && window._fbDb && window._fbFns) {
+    _saveUserToFirestore(currentUser.email, users[currentUser.email] || currentUser).catch(()=>{});
+  }
+}
+
+// Email <-> Firestore key helpers
+// Old format used "." -> "_" which breaks emails with underscores (e.g. ali_khan@gmail.com)
+// New format uses "." -> "|D|" to avoid ambiguity
+function _emailToKey(email) { return email.replace(/\./g, '|D|'); }
+function _keyToEmail(key) { return key.replace(/\|D\|/g, '.'); }
+
+async function _saveUserToFirestore(email, userData) {
+  if (!window._fbDb || !window._fbFns) return;
+  const { doc, setDoc } = window._fbFns;
+  const safeKey = _emailToKey(email);
+  try {
+    await setDoc(doc(window._fbDb, 'users', safeKey), userData);
+  } catch(e){ console.error('Firestore save error:', e); }
+}
+
+async function _loadUserFromFirestore(email) {
+  if (!window._fbDb || !window._fbFns) return null;
+  const { doc, getDoc } = window._fbFns;
+  const safeKey = _emailToKey(email);
+  try {
+    const snap = await getDoc(doc(window._fbDb, 'users', safeKey));
+    return snap.exists() ? snap.data() : null;
+  } catch(e){ return null; }
+}
+
+async function _loadAllUsersFromFirestore() {
+  if (!window._fbDb || !window._fbFns) return false;
+  const { collection, getDocs } = window._fbFns;
+  try {
+    const snap = await getDocs(collection(window._fbDb, 'users'));
+    const byEmail = {}; // email -> array of {data, isNewKeyFormat, docId}
+    snap.forEach(d => {
+      // Support both old keys (dot->underscore) and new keys (dot->|D|)
+      const isNewKeyFormat = d.id.includes('|D|');
+      const rawEmail = isNewKeyFormat ? _keyToEmail(d.id) : d.id.replace(/_/g, '.');
+      const email = rawEmail.toLowerCase().trim();
+      const data = d.data();
+      if (data.referredBy) data.referredBy = data.referredBy.toLowerCase().trim();
+      byEmail[email] = byEmail[email] || [];
+      byEmail[email].push({ data, isNewKeyFormat, docId: d.id });
+    });
+
+    // Merge duplicates: prefer the doc with the most "complete" referral data,
+    // not just whichever Firestore happened to return last.
+    for (const email of Object.keys(byEmail)) {
+      const docs = byEmail[email];
+      if (docs.length === 1) {
+        users[email] = docs[0].data;
+        continue;
+      }
+      // Multiple docs for the same email (old underscore key + new |D| key).
+      // Score each by how much referral-relevant data it carries.
+      const score = (d) => {
+        let s = 0;
+        if (d.data.referredBy) s += 10;
+        if (d.data.referrals && d.data.referrals.length) s += d.data.referrals.length;
+        if (d.data.totalDeposit) s += 1;
+        if (d.data.transactions && d.data.transactions.length) s += 1;
+        if (d.isNewKeyFormat) s += 0.5; // slight tiebreaker toward the current key format
+        return s;
+      };
+      docs.sort((a,b) => score(b) - score(a));
+      const winner = docs[0].data;
+      // Merge in referredBy/referrals from any loser that the winner is missing
+      for (let i=1;i<docs.length;i++) {
+        const loser = docs[i].data;
+        if (!winner.referredBy && loser.referredBy) winner.referredBy = loser.referredBy;
+        if ((!winner.referrals || winner.referrals.length===0) && loser.referrals && loser.referrals.length) winner.referrals = loser.referrals;
+      }
+      users[email] = winner;
+      console.warn(`[dup-merge] ${email} had ${docs.length} Firestore docs (${docs.map(d=>d.docId).join(', ')}) — merged.`);
+    }
+
+    try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+    return true;
+  } catch(e){ return false; }
+}
+
+function loadUsers() {
+  try {
+    const raw = localStorage.getItem('ce_users_cache');
+    if (raw) users = JSON.parse(raw);
+  } catch(e){}
+}
+
+async function loadUsersFromFirebase() {
+  window._firebaseLoading = true;
+  // Wait for Firebase to be ready
+  let tries = 0;
+  while (!window._firebaseReady && tries < 20) {
+    await new Promise(r => setTimeout(r, 200));
+    tries++;
+  }
+  await _loadAllUsersFromFirestore();
+  window._firebaseLoading = false;
+  render();
+}
+
+function saveSession(email) { try { localStorage.setItem('ce_session', email); } catch(e){} }
+function clearSession() { try { localStorage.removeItem('ce_session'); } catch(e){} }
+function loadSession() {
+  try {
+    const email = localStorage.getItem('ce_session');
+    if (email && users[email]) {
+      // Always load balance FROM users object (integrity-checked) — not from session
+      currentUser = { ...users[email], email };
+      applyTheme(currentUser.darkTheme !== false);
+    }
+  } catch(e){}
+}
+// Re-sync currentUser balance from users object every time (console tamper protection)
+function syncCurrentUser() {
+  if (!currentUser) return;
+  const u = users[currentUser.email];
+  if (u) {
+    currentUser.balance        = u.balance;
+    currentUser.totalDeposit   = u.totalDeposit;
+    currentUser.totalProfit    = u.totalProfit;
+    currentUser.transactions   = u.transactions;
+    currentUser.referralCode   = u.referralCode;
+    currentUser.referrals      = u.referrals;
+    currentUser.referredBy     = u.referredBy;
+    currentUser.totalWithdrawn = u.totalWithdrawn;
+  }
+}
+loadUsers();
+
+// Ensure admin flag is set for admin account (matched via hash, no plaintext email stored)
+(async () => {
+  for (const e of Object.keys(users)) {
+    if (await _sha256(e) === _ADMIN_EMAIL_HASH) {
+      users[e].isAdmin = true;
+      saveUsers();
+      break;
+    }
+  }
+})();
+
+// ─── Monthly Team Salary ─────────────────────────────────────────────────────
+const TEAM_SALARY_TIERS = [
+  { minDeposit: 10000, bonus: 50,  label: 'Elite'   },
+  { minDeposit: 3000,  bonus: 25,  label: 'Gold'    },
+  { minDeposit: 1000,  bonus: 10,  label: 'Silver'  },
+];
+
+function getTeamTotalDeposit(email) {
+  const normEmail = (email || '').toLowerCase().trim();
+  const u = users[email] || users[normEmail];
+  if (!u) return 0;
+  // Level 1 team deposits
+  const l1Emails = Object.entries(users)
+    .filter(([e, usr]) => usr.referredBy && usr.referredBy.toLowerCase().trim() === normEmail)
+    .map(([e]) => e);
+  let total = 0;
+  for (const l1Email of l1Emails) {
+    const normL1 = l1Email.toLowerCase().trim();
+    total += users[l1Email]?.totalDeposit || 0;
+    // Level 2
+    const l2Emails = Object.entries(users)
+      .filter(([e, usr]) => usr.referredBy && usr.referredBy.toLowerCase().trim() === normL1)
+      .map(([e]) => e);
+    for (const l2Email of l2Emails) {
+      total += users[l2Email]?.totalDeposit || 0;
+    }
+  }
+  return total;
+}
+
+function getTeamSalaryTier(teamDeposit) {
+  for (const tier of TEAM_SALARY_TIERS) {
+    if (teamDeposit >= tier.minDeposit) return tier;
+  }
+  return null;
+}
+
+async function checkMonthlySalaries() {
+  const now = Date.now();
+  const oneMonth = 30 * 24 * 60 * 60 * 1000;
+  let anyUpdated = false;
+  for (const [email, u] of Object.entries(users)) {
+    if (!u || u.isAdmin) continue;
+    const teamDeposit = getTeamTotalDeposit(email);
+    const tier = getTeamSalaryTier(teamDeposit);
+    if (!tier) continue;
+    const lastSalary = u.lastMonthlySalary || u.subscribeDate || u.joinDate || now;
+    if (now - lastSalary >= oneMonth) {
+      users[email].balance = (users[email].balance || 0) + tier.bonus;
+      users[email].totalProfit = (users[email].totalProfit || 0) + tier.bonus;
+      users[email].lastMonthlySalary = now;
+      users[email].transactions = users[email].transactions || [];
+      users[email].transactions.unshift({
+        id: Date.now() + Math.random(),
+        type: 'profit',
+        amount: tier.bonus,
+        date: getDateTime(),
+        status: 'confirmed',
+        txHash: `Team-Salary-${tier.label}`
+      });
+      await _saveUserToFirestore(email, users[email]);
+      anyUpdated = true;
+    }
+  }
+  if (anyUpdated) {
+    try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+    if (currentUser?.email && users[currentUser.email]) {
+      currentUser.balance = users[currentUser.email].balance;
+    }
+  }
+}
+
+// Check every hour
+setInterval(checkMonthlySalaries, 60 * 60 * 1000);
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let currentUser = null;
+loadSession();
+let authMode = 'register'; // Naye user ko seedha Register screen
+let tab = 'dashboard';
+let adminTab = 'overview';
+let adminSearch = '';
+let fpStep = 1, fpEmail = '', fpNewPass = '', fpConfirm = '';
+let showPassAuth = false, showPassFp = false;
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function isAdmin() { return !!(currentUser && currentUser.isAdmin); }
+
+function getTodayDate() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function getDateTime() {
+  const now = new Date();
+  const date = now.toISOString().split('T')[0];
+  const hours = String(now.getHours()).padStart(2,'0');
+  const mins = String(now.getMinutes()).padStart(2,'0');
+  return `${date} ${hours}:${mins}`;
+}
+
+// ─── Notification ─────────────────────────────────────────────────────────────
+let notifTimer = null;
+function showNotif(msg, type = 'success') {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.style.background = type === 'error' ? '#ef4444' : '#00C896';
+  el.style.color = '#fff';
+  el.style.boxShadow = `0 4px 24px ${type==='error'?'rgba(239,68,68,0.4)':'rgba(0,200,150,0.4)'}`;
+  el.classList.remove('hidden');
+  if (notifTimer) clearTimeout(notifTimer);
+  notifTimer = setTimeout(() => el.classList.add('hidden'), 3500);
+}
+
+// ─── First-Time Admin Setup ────────────────────────────────────────────────────
+function renderAdminSetup() {
+  return `
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#060b18;">
+    <div style="width:100%;max-width:420px;">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#00C896,#0066ff);display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 16px;box-shadow:0 8px 32px rgba(0,200,150,0.3);">⚙️</div>
+        <h1 style="color:#fff;font-size:22px;font-weight:800;margin-bottom:6px;">Admin Setup</h1>
+        <p style="color:rgba(255,255,255,0.5);font-size:14px;">Pehli baar Admin account banayein</p>
+      </div>
+      <div id="setup-err" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:10px 14px;margin-bottom:16px;color:#ef4444;font-size:13px;font-weight:500;"></div>
+      <div style="margin-bottom:14px;">
+        <label style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;margin-bottom:6px;">Admin Email</label>
+        <input id="setup-email" type="email" placeholder="aap ki email" class="input" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 16px;color:#fff;font-size:16px;outline:none;-webkit-appearance:none;" />
+      </div>
+      <div style="margin-bottom:14px;">
+        <label style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;margin-bottom:6px;">Admin Password</label>
+        <input id="setup-pass" type="password" placeholder="strong password likhein" class="input" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 16px;color:#fff;font-size:16px;outline:none;-webkit-appearance:none;" />
+      </div>
+      <div style="margin-bottom:24px;">
+        <label style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;margin-bottom:6px;">Password Confirm Karein</label>
+        <input id="setup-pass2" type="password" placeholder="dobara likhein" class="input" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px 16px;color:#fff;font-size:16px;outline:none;-webkit-appearance:none;" />
+      </div>
+      <button onclick="saveAdminSetup()" style="width:100%;background:linear-gradient(135deg,#00C896,#0066ff);border:none;color:#fff;border-radius:14px;padding:16px 0;font-weight:800;font-size:16px;cursor:pointer;font-family:inherit;">Admin Account Banayein</button>
+      <p style="color:rgba(255,255,255,0.3);font-size:12px;text-align:center;margin-top:16px;">⚠️ Ye credentials files mein save nahi hote — sirf aap ke browser mein.</p>
+    </div>
+  </div>`;
+}
+
+function saveAdminSetup() {
+  const email = (document.getElementById('setup-email').value || '').trim().toLowerCase();
+  const pass  = document.getElementById('setup-pass').value;
+  const pass2 = document.getElementById('setup-pass2').value;
+  const errEl = document.getElementById('setup-err');
+  const showErr = (msg) => { errEl.textContent = msg; errEl.style.display = 'block'; };
+  errEl.style.display = 'none';
+  if (!email || !email.includes('@')) return showErr('Valid email likhein');
+  if (pass.length < 6) return showErr('Password kam az kam 6 characters ka hona chahiye');
+  if (pass !== pass2) return showErr('Dono passwords match nahi karte');
+  try {
+    localStorage.setItem('ce_admin_email', email);
+    if (users[email]) delete users[email];
+    // Password ko hash karke save karo
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass)).then(buf => {
+      const hashHex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      users[email] = {
+        password: hashHex, name: 'Admin',
+        balance: 0, totalProfit: 0, totalDeposit: 0, totalWithdrawn: 0,
+        referralCode: 'ADMIN001', referredBy: null,
+        referrals: [], transactions: [], isAdmin: true
+      };
+      localStorage.setItem('ce_admin_email', email);
+      localStorage.setItem('ce_admin_hash', hashHex);
+      saveUsers();
+      render();
+    });
+    return;
+  } catch(e) { showErr('Setup fail hua, browser storage check karein'); }
+}
+
+
+function render() {
+  const app = document.getElementById('app');
+  // Always re-sync balance from integrity-checked users object
+  syncCurrentUser();
+
+  // Admin hardcoded — no setup screen needed
+
+  if (!currentUser) {
+    const nav = document.getElementById('bottom-nav');
+    if (nav) nav.remove();
+    if (authMode === 'forgot') { app.innerHTML = renderForgot(); return; }
+    app.innerHTML = renderAuth();
+    return;
+  }
+  // Check and add any pending daily profit before rendering
+  if (!isAdmin()) checkAndAddProfit();
+  if (!document.getElementById('bottom-nav')) {
+    document.body.insertAdjacentHTML('beforeend', renderBottomNav());
+  }
+  app.innerHTML = renderMain();
+  updateNav();
+  // Start countdown timer for profit
+  if (!isAdmin() && tab === 'dashboard') startCountdownTimer();
+}
+
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+function renderAuth() {
+  return `
+  <div class="auth-wrap">
+    <div class="auth-inner">
+      <div class="auth-logo">
+        <div class="auth-logo-icon">
+          <svg width="40" height="40" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="rgba(255,255,255,0.1)"/><text x="32" y="44" text-anchor="middle" font-size="36" fill="white" font-family="Arial" font-weight="bold">₿</text><circle cx="48" cy="16" r="5" fill="#f59e0b"/></svg>
+        </div>
+        <div class="auth-title" style="font-family:'Orbitron',sans-serif;font-size:22px;background:linear-gradient(90deg,#00C896,#0099ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">CRYPTOEARN PRO</div>
+        <div class="auth-subtitle">Dubai's #1 USDT Investment Platform 🌍</div>
+      </div>
+      <div class="tab-switcher">
+        <button class="tab-btn ${authMode==='register'?'active':''}" onclick="setAuthMode('register')">✨ Register</button>
+        <button class="tab-btn ${authMode==='login'?'active':''}" onclick="setAuthMode('login')">🔑 Login</button>
+      </div>
+      <div class="card" style="padding:26px 22px">
+        <div id="auth-err"></div>
+        ${authMode==='register'?`
+          <div class="mb14">
+            <label class="label">Your Name</label>
+            <input class="input" id="a-name" placeholder="e.g. Ali Hassan" />
+          </div>`:''}
+        <div class="mb14">
+          <label class="label">Email Address</label>
+          <input class="input" id="a-email" type="email" placeholder="email@example.com" />
+        </div>
+        <div class="pos-rel ${authMode==='register'?'mb14':''}">
+          <label class="label">Password</label>
+          <input class="input" id="a-pass" type="password" placeholder="${authMode==='register'?'At least 6 characters':'Enter password'}" />
+          <button class="eye-btn" onclick="togglePassAuth()" id="eye-auth">👁️</button>
+        </div>
+        ${authMode==='login'?`
+          <div style="text-align:right;margin:10px 0 18px">
+            <button class="link-btn" onclick="setAuthMode('forgot')">🔐 Forgot password?</button>
+          </div>`:''}
+        ${authMode==='register'?`
+          <div class="mb20">
+            <label class="label">Referral Code (Optional)</label>
+            <input class="input" id="a-ref" placeholder="e.g. ABCD1234" style="text-transform:uppercase;" />
+          </div>`:''}
+        <button class="btn-primary" onclick="${authMode==='login'?'handleLogin()':'handleRegister()'}">
+          ${authMode==='login'?'Login →':'Create Account →'}
+        </button>
+        ${authMode==='login'?`<div class="demo-hint">Demo: demo@gmail.com / demo123</div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function setAuthMode(m) {
+  authMode = m;
+  if (m === 'forgot') { fpStep = 1; fpEmail = ''; fpNewPass = ''; fpConfirm = ''; }
+  render();
+}
+
+function togglePassAuth() {
+  showPassAuth = !showPassAuth;
+  const inp = document.getElementById('a-pass');
+  if (inp) inp.type = showPassAuth ? 'text' : 'password';
+  const btn = document.getElementById('eye-auth');
+  if (btn) btn.textContent = showPassAuth ? '🙈' : '👁️';
+}
+
+function setAuthError(msg) {
+  const el = document.getElementById('auth-err');
+  if (el) el.innerHTML = `<div class="err">⚠️ ${msg}</div>`;
+}
+
+async function handleLogin() {
+  const email = (document.getElementById('a-email')?.value||'').toLowerCase().trim();
+  const pass  = document.getElementById('a-pass')?.value||'';
+  if (!email||!pass) return setAuthError("Please enter your email and password");
+  // Cloud se latest data load karo login se pehle
+  await _loadAllUsersFromFirestore();
+  const isAdminLogin = (await _sha256(email)) === _ADMIN_EMAIL_HASH;
+  const user = users[email];
+
+  // Admin login — hardcoded credentials (hash-based, asli email/password file mein nahi)
+  if (isAdminLogin) {
+    const hashHex = await _sha256(pass);
+    if (hashHex !== _ADMIN_HASH) return setAuthError("Incorrect password");
+    const adminUser = user || { name: 'Admin', balance: 0, totalProfit: 0, totalDeposit: 0, totalWithdrawn: 0, referralCode: 'ADMIN001', referredBy: null, referrals: [], transactions: [], isAdmin: true };
+    currentUser = { ...adminUser, email, isAdmin: true };
+    users[email] = { ...adminUser, password: _ADMIN_HASH, isAdmin: true };
+    saveSession(email);
+    saveUsers();
+    tab = 'dashboard'; adminTab = 'overview';
+    applyTheme(currentUser.darkTheme !== false);
+    render();
+    return;
+  }
+
+  if (!user) return setAuthError("This email is not registered");
+  // Password hash check
+  const passHash = await _sha256(pass);
+  if (user.password !== passHash && user.password !== pass) return setAuthError("Incorrect password");
+  currentUser = { ...user, email };
+  saveSession(email);
+  tab = 'dashboard';
+  applyTheme(currentUser.darkTheme !== false);
+  render();
+}
+
+async function handleRegister() {
+  const name  = (document.getElementById('a-name')?.value||'').trim();
+  const email = (document.getElementById('a-email')?.value||'').toLowerCase().trim();
+  const pass  = document.getElementById('a-pass')?.value||'';
+  const ref   = (document.getElementById('a-ref')?.value||'').trim().replace(/[-\s]/g,'').toUpperCase();
+
+  if (!name) return setAuthError("Please enter your name");
+  if (!email||!email.includes('@')) return setAuthError("Please enter a valid email");
+  if (pass.length < 6) return setAuthError("Password must be at least 6 characters");
+  email = email.toLowerCase().trim();
+  if (users[email]) return setAuthError("This email is already registered");
+  if ((await _sha256(email)) === _ADMIN_EMAIL_HASH) return setAuthError("This email cannot be used for registration");
+
+  let referredBy = null;
+  if (ref) {
+    const owner = Object.entries(users).find(([,u]) => u.referralCode === ref.toUpperCase());
+    if (!owner) return setAuthError("Invalid referral code");
+    referredBy = owner[0].toLowerCase().trim();
+  }
+
+  // Generate unique referral code for each new user
+  const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const digits = '0123456789';
+  let code;
+  do {
+    let l = '', d = '';
+    for (let i=0;i<4;i++) l += letters[Math.floor(Math.random()*letters.length)];
+    for (let i=0;i<4;i++) d += digits[Math.floor(Math.random()*digits.length)];
+    code = l + d;
+  } while (Object.values(users).some(u => u.referralCode === code));
+
+  const newUser = {
+    password: pass, name, balance: 0, totalProfit: 0,
+    totalDeposit: 0, totalWithdrawn: 0,
+    subscribedPlan: null, subscribeDate: null, lastProfitClaim: null,
+    referralCode: code, referredBy,
+    referrals: [], transactions: []
+  };
+  // Password hash karo
+  const passHash = await _sha256(pass);
+  newUser.password = passHash;
+  users[email] = newUser;
+
+  // Firebase Auth mein register karo
+  if (window._fbAuth && window._fbFns) {
+    try {
+      await window._fbFns.createUserWithEmailAndPassword(window._fbAuth, email, pass);
+    } catch(authErr) {
+      if (authErr.code !== 'auth/email-already-in-use') {
+        console.warn('Auth warning:', authErr.message);
+      }
+    }
+  }
+
+  // Firestore mein new user save karo with referredBy
+  users[email] = newUser;
+  let signupSaveOk = true;
+  try {
+    await _saveUserToFirestore(email, newUser);
+  } catch(e) {
+    signupSaveOk = false;
+    console.error('CRITICAL: new user Firestore save failed', email, e);
+  }
+
+  // Agar referral code use kiya to referrer ko update karo
+  if (referredBy && users[referredBy]) {
+    users[referredBy].referrals = users[referredBy].referrals || [];
+    users[referredBy].referrals.push({ name, email: email.toLowerCase().trim(), level: 1, deposit: 0, commission: 0 });
+    // Referrer ko Firestore mein update karo
+    try {
+      await _saveUserToFirestore(referredBy, users[referredBy]);
+    } catch(e) {
+      console.error('CRITICAL: referrer Firestore save failed — referral link may not persist', referredBy, e);
+      showNotif('⚠️ Account bana lekin referral link save karne mein issue aaya. Admin se Scan & Fix chalwana.', 'error');
+    }
+  }
+  if (!signupSaveOk) {
+    showNotif('⚠️ Account bana lekin Firestore save fail hua — dobara login try karo.', 'error');
+  }
+  
+  saveUsers();
+  currentUser = { ...newUser, email };
+  saveSession(email);
+  tab = 'dashboard';
+  render();
+  showNotif(`Welcome ${name}! 🎉`);
+}
+
+// ─── Forgot Password ──────────────────────────────────────────────────────────
+function renderForgot() {
+  const stepLabels = ['Verify your email','New password'];
+  return `
+  <div class="auth-wrap">
+    <div class="auth-inner">
+      <div style="text-align:center;margin-bottom:28px">
+        <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 12px">🔐</div>
+        <div style="font-size:22px;font-weight:800">Password Reset</div>
+        <div class="fp-step-info">Step ${fpStep} / 2 — ${stepLabels[fpStep-1]}</div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${(fpStep/2)*100}%"></div></div>
+      <div class="card" style="padding:26px 22px">
+        <div id="fp-err"></div>
+        ${fpStep===1?`
+          <label class="label">Your registered email</label>
+          <input class="input mb20" id="fp-email" type="email" placeholder="email@example.com" value="${fpEmail}" style="margin-bottom:20px" />
+          <button class="btn-primary btn-orange" onclick="fpDo1()">Continue →</button>
+        `:`
+          <div class="pos-rel mb14">
+            <label class="label">New Password</label>
+            <input class="input" id="fp-new" type="password" placeholder="New password (min 6)" />
+            <button class="eye-btn" onclick="togglePassFp()">👁️</button>
+          </div>
+          <div style="margin-bottom:20px">
+            <label class="label">Confirm Password</label>
+            <input class="input" id="fp-conf" type="password" placeholder="Confirm password" />
+          </div>
+          <button class="btn-primary" onclick="fpDo3()">✅ Reset Password</button>
+        `}
+        <button class="back-btn" onclick="setAuthMode('login')">← Back to Login</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function setFpError(msg) { const el=document.getElementById('fp-err'); if(el) el.innerHTML=`<div class="err">⚠️ ${msg}</div>`; }
+function fpDo1() {
+  fpEmail = (document.getElementById('fp-email')?.value||'').toLowerCase().trim();
+  const user = users[fpEmail];
+  if (!user) return setFpError("This email is not registered");
+  fpStep = 2; render();
+}
+function fpDo3() {
+  fpNewPass = document.getElementById('fp-new')?.value||'';
+  fpConfirm = document.getElementById('fp-conf')?.value||'';
+  if (fpNewPass.length < 6) return setFpError("Password must be at least 6 characters");
+  if (fpNewPass !== fpConfirm) return setFpError("Passwords do not match");
+  users[fpEmail].password = fpNewPass; saveUsers();
+  showNotif("Password reset successfully! ✅"); setAuthMode('login');
+}
+function togglePassFp() {
+  showPassFp = !showPassFp;
+  ['fp-new','fp-conf'].forEach(id => { const el=document.getElementById(id); if(el) el.type=showPassFp?'text':'password'; });
+}
+
+// ─── Main App ─────────────────────────────────────────────────────────────────
+function renderMain() {
+  const plan    = getPlan(currentUser.balance);
+  const daily   = getDailyProfit(currentUser.balance).toFixed(2);
+  const monthly = (getDailyProfit(currentUser.balance) * 30).toFixed(2);
+  return `
+  <div id="header">
+    <div class="header-logo">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.15)"/><text x="12" y="17" text-anchor="middle" font-size="13" fill="white" font-family="Arial" font-weight="bold">₿</text></svg>
+      </div>
+      <div>
+        <div class="logo-text-main">CRYPTOEARN</div>
+        <div class="logo-text-sub">PRO · Live</div>
+      </div>
+    </div>
+    <div class="header-right">
+      ${isAdmin()?`<div class="badge-admin">👑 ADMIN</div>`:`<div class="badge-green">👤 ${currentUser.name}</div>`}
+      <div class="badge-red" onclick="handleLogout()">Logout</div>
+    </div>
+  </div>
+  <!-- Crypto Ticker -->
+  <div class="crypto-ticker">
+    <span class="ticker-inner">
+      <span class="ticker-item">₿ BTC <span class="ticker-up">$67,420 ▲2.3%</span></span>
+      <span class="ticker-item">Ξ ETH <span class="ticker-up">$3,512 ▲1.8%</span></span>
+      <span class="ticker-item">● USDT <span class="ticker-up">$1.00 ▲0.01%</span></span>
+      <span class="ticker-item">◎ BNB <span class="ticker-down">$412 ▼0.5%</span></span>
+      <span class="ticker-item">◈ SOL <span class="ticker-up">$178 ▲3.1%</span></span>
+      <span class="ticker-item">◆ XRP <span class="ticker-up">$0.62 ▲1.2%</span></span>
+      <span class="ticker-item">₿ BTC <span class="ticker-up">$67,420 ▲2.3%</span></span>
+      <span class="ticker-item">Ξ ETH <span class="ticker-up">$3,512 ▲1.8%</span></span>
+    </span>
+  </div>
+  <div class="page">
+    ${tab==='dashboard'  ? (isAdmin() ? renderAdminPanel() : renderDashboard(plan, daily, monthly)) : ''}
+    ${tab==='deposit'    ? renderDeposit()   : ''}
+    ${tab==='withdraw'   ? renderWithdraw()  : ''}
+    ${tab==='referral'   ? renderReferral()  : ''}
+    ${tab==='history'    ? renderHistory()   : ''}
+    ${tab==='settings'   ? renderSettings()  : ''}
+  </div>`;
+}
+
+// ─── Dashboard (normal user) ──────────────────────────────────────────────────
+function renderDashboard(plan, daily, monthly) {
+  const txRows = currentUser.transactions.slice(0,3).map(tx => txRow(tx, false)).join('');
+  const isSubscribed = currentUser.subscribedPlan !== null && currentUser.subscribedPlan !== undefined;
+  const secLeft = getNextProfitSeconds();
+  const hrs = secLeft !== null ? Math.floor(secLeft/3600) : 0;
+  const mins = secLeft !== null ? Math.floor((secLeft%3600)/60) : 0;
+  const secs = secLeft !== null ? secLeft%60 : 0;
+  const countdownStr = `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+  return `
+  <div class="balance-card">
+    <div class="balance-label">Total Balance</div>
+    <div class="balance-amount">$${currentUser.balance.toFixed(2)}</div>
+    <div class="balance-sub">USDT · BEP-20</div>
+    <div class="balance-actions">
+      <button class="balance-btn" onclick="goTab('deposit')">⬇️ Deposit</button>
+      <button class="balance-btn" onclick="goTab('withdraw')">⬆️ Withdraw</button>
+    </div>
+  </div>
+
+  <!-- Daily Profit Countdown -->
+  ${isSubscribed ? `
+  <div style="margin-top:14px;background:linear-gradient(135deg,rgba(0,200,150,0.13),rgba(0,200,150,0.05));border:1px solid rgba(0,200,150,0.35);border-radius:16px;padding:16px 18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.45)">🟢 Plan Active — Daily Profit</div>
+        <div style="font-size:22px;font-weight:800;color:#00C896;margin-top:3px">+$${getDailyProfit(currentUser.balance).toFixed(2)} / day</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:4px">Next Profit In</div>
+        <div id="profit-countdown" style="font-size:20px;font-weight:800;color:#f59e0b;letter-spacing:1px;font-family:monospace">${countdownStr}</div>
+      </div>
+    </div>
+    <div style="background:rgba(0,200,150,0.08);border-radius:8px;padding:8px 12px;font-size:12px;color:rgba(255,255,255,0.5)">
+      📦 ${PLANS[currentUser.subscribedPlan].name} — ${PLANS[currentUser.subscribedPlan].label}/day subscribed
+    </div>
+  </div>` : currentUser.balance > 0 ? `
+  <div style="margin-top:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:16px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#f59e0b">⚠️ No Plan Subscribed</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px">Subscribe a plan below to start earning daily profit</div>
+    </div>
+    <div style="font-size:28px">👇</div>
+  </div>` : ''}
+
+  <!-- Active Plan Badge -->
+  <div style="margin-top:14px;background:linear-gradient(135deg,rgba(${plan.color==='#00C896'?'0,200,150':plan.color==='#6c63ff'?'108,99,255':'245,158,11'},0.12),rgba(${plan.color==='#00C896'?'0,200,150':plan.color==='#6c63ff'?'108,99,255':'245,158,11'},0.05));border:1px solid ${plan.color}44;border-radius:16px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:3px">Active Plan</div>
+      <div style="font-size:17px;font-weight:800;color:${plan.color}">${plan.name} — ${plan.label}/day</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">$${plan.min}${plan.max===Infinity?'+':' – $'+plan.max} balance range</div>
+    </div>
+    <div style="font-size:32px">🎯</div>
+  </div>
+
+  <div class="stats-grid">
+    ${[
+      {label:'Daily Profit',  value:`$${daily}`,                    sub:plan.label+' / day', color:plan.color,  icon:'📈'},
+      {label:'Monthly',       value:`$${monthly}`,                  sub:'30 days',            color:'#6c63ff',   icon:'🗓️'},
+      {label:'Total Earned',  value:`$${currentUser.totalProfit.toFixed(2)}`,  sub:'All time',           color:'#f59e0b',   icon:'💰'},
+      {label:'Total Deposit', value:`$${currentUser.totalDeposit}`, sub:'Invested',           color:'#3b82f6',   icon:'💳'},
+    ].map(s=>`
+    <div class="stat-card">
+      <div class="stat-icon">${s.icon}</div>
+      <div class="stat-value" style="color:${s.color}">${s.value}</div>
+      <div class="stat-name">${s.label}</div>
+      <div class="stat-sub" style="color:${s.color}">${s.sub}</div>
+    </div>`).join('')}
+  </div>
+
+  <!-- 3 Plans with Subscribe Button -->
+  <div class="card card-green mt14">
+    <div style="font-weight:700;font-size:15px;margin-bottom:16px;color:#00C896">📊 Investment Plans</div>
+    ${PLANS.map((p,i) => {
+      const canSubscribe = currentUser.balance >= p.min && (p.max===Infinity ? true : currentUser.balance <= p.max) && currentUser.balance > 0;
+      const isSubbed = currentUser.subscribedPlan === i;
+      const colorRgb = p.color==='#00C896'?'0,200,150':p.color==='#6c63ff'?'108,99,255':'245,158,11';
+      return `
+      <div style="background:${canSubscribe?'rgba('+colorRgb+',0.1)':'rgba(255,255,255,0.03)'};border:1px solid ${canSubscribe?p.color+'55':'rgba(255,255,255,0.07)'};border-radius:14px;padding:14px 16px;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:14px;font-weight:800;color:${p.color}">${p.name} ${isSubbed?`<span style="font-size:10px;background:${p.color}22;border:1px solid ${p.color}55;border-radius:20px;padding:2px 8px;color:${p.color}">✅ SUBSCRIBED</span>`:''}${canSubscribe&&!isSubbed?`<span style="font-size:10px;background:rgba(255,255,255,0.07);border-radius:20px;padding:2px 8px;color:rgba(255,255,255,0.45)">Available</span>`:''}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:3px">$${p.min}${p.max===Infinity?'+':' – $'+p.max} balance</div>
+            ${canSubscribe?`<div style="font-size:11px;color:${p.color};margin-top:2px">Daily: $${(currentUser.balance*p.rate).toFixed(2)}</div>`:''}
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:22px;font-weight:800;color:${p.color}">${p.label}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4)">daily profit</div>
+          </div>
+        </div>
+        ${canSubscribe && !isSubbed ? `<button onclick="subscribePlan(${i})" style="margin-top:10px;width:100%;padding:10px;background:linear-gradient(135deg,${p.color},${p.color}cc);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">🚀 Subscribe ${p.name}</button>` : ''}
+        ${isSubbed ? `<div style="margin-top:10px;text-align:center;font-size:12px;color:${p.color};background:${p.color}11;border-radius:8px;padding:8px">✅ This plan is active — profit is running</div>` : ''}
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div class="card card-purple mt14">
+    <div class="label" style="margin-bottom:6px">Your Referral Code</div>
+    <div style="font-size:20px;font-weight:800;color:#6c63ff;letter-spacing:2px">${currentUser.referralCode}</div>
+  </div>
+  ${currentUser.transactions.length>0?`
+  <div class="mt16">
+    <div style="font-weight:700;font-size:15px;margin-bottom:12px">Recent Transactions</div>
+    ${txRows}
+  </div>`:''}`;
+}
+
+
+// ─── ADMIN PANEL ──────────────────────────────────────────────────────────────
+function renderAdminPanel() {
+  const allUsers = Object.entries(users).filter(([e]) => e !== currentUser.email);
+  const totalUsers = allUsers.length;
+  const totalDeposits = allUsers.reduce((s,[,u]) => s + (u.totalDeposit||0), 0);
+  const totalWithdrawn = allUsers.reduce((s,[,u]) => s + (u.totalWithdrawn||0), 0);
+  const totalBalance = allUsers.reduce((s,[,u]) => s + (u.balance||0), 0);
+  const totalTx = allUsers.reduce((s,[,u]) => s + (u.transactions||[]).length, 0);
+  const pendingWithdrawals = allUsers.flatMap(([email,u]) =>
+    (u.transactions||[]).filter(t => t.type==='withdraw' && t.status==='pending')
+    .map(t => ({ ...t, userEmail: email, userName: u.name }))
+  );
+  const pendingDeposits = allUsers.flatMap(([email,u]) =>
+    (u.transactions||[]).filter(t => t.type==='deposit' && t.status==='pending')
+    .map(t => ({ ...t, userEmail: email, userName: u.name }))
+  );
+
+  const filteredUsers = adminSearch
+    ? allUsers.filter(([e,u]) => e.includes(adminSearch.toLowerCase()) || u.name.toLowerCase().includes(adminSearch.toLowerCase()))
+    : allUsers;
+
+  return `
+  <div class="admin-banner">
+    <div class="admin-badge-large">👑</div>
+    <div>
+      <div class="admin-title">Admin Panel</div>
+      <div class="admin-sub">All users data • ${currentUser.email}</div>
+    </div>
+  </div>
+
+  <div class="admin-stats-grid">
+    <div class="admin-stat">
+      <div class="admin-stat-val">${totalUsers}</div>
+      <div class="admin-stat-lbl">👥 Total Users</div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-val">$${totalDeposits.toFixed(2)}</div>
+      <div class="admin-stat-lbl">💳 Total Deposits</div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-val">$${totalWithdrawn.toFixed(2)}</div>
+      <div class="admin-stat-lbl">⬆️ Total Withdrawn</div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-val">$${totalBalance.toFixed(2)}</div>
+      <div class="admin-stat-lbl">💰 Total Balance</div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-val">${totalTx}</div>
+      <div class="admin-stat-lbl">📋 Total Transactions</div>
+    </div>
+    <div class="admin-stat">
+      <div class="admin-stat-val" style="color:#f59e0b">${pendingWithdrawals.length + pendingDeposits.length}</div>
+      <div class="admin-stat-lbl">⏳ Pending Requests</div>
+    </div>
+  </div>
+
+  <div class="admin-tab-bar">
+    <button class="admin-tab ${adminTab==='overview'?'active':''}" onclick="setAdminTab('overview')">📊 Overview</button>
+    <button class="admin-tab ${adminTab==='users'?'active':''}" onclick="setAdminTab('users')">👥 Users</button>
+    <button class="admin-tab ${adminTab==='pending'?'active':''}" onclick="setAdminTab('pending')">
+      ⏳ Pending ${pendingWithdrawals.length+pendingDeposits.length>0?`(${pendingWithdrawals.length+pendingDeposits.length})`:''}
+    </button>
+    <button class="admin-tab ${adminTab==='tools'?'active':''}" onclick="setAdminTab('tools')">🔧 Tools</button>
+    <button class="admin-tab ${adminTab==='backup'?'active':''}" onclick="setAdminTab('backup')">💾 Backup</button>
+  </div>
+
+  ${adminTab==='overview' ? renderAdminOverview(allUsers) : ''}
+  ${adminTab==='users' ? renderAdminUsers(filteredUsers) : ''}
+  ${adminTab==='pending' ? renderAdminPending(pendingDeposits, pendingWithdrawals) : ''}
+  ${adminTab==='tools' ? renderAdminTools() : ''}
+  ${adminTab==='backup' ? renderAdminBackup() : ''}
+  `;
+}
+
+function renderAdminOverview(allUsers) {
+  // Recent transactions across all users
+  const allTx = allUsers.flatMap(([email,u]) =>
+    (u.transactions||[]).map(t => ({ ...t, userEmail: email, userName: u.name }))
+  ).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0,10);
+
+  return `
+  <div class="admin-section-title">📋 Recent Activity (All Users)</div>
+  ${allTx.length===0?`<div class="empty-state">No transactions yet</div>`:''}
+  ${allTx.map(tx => {
+    const isOut = tx.type==='withdraw' || tx.type==='deduct';
+    const statusOk = ['confirmed','credited'].includes(tx.status);
+    const icons = { deposit:'⬇️', profit:'💹', withdraw:'⬆️', referral:'🤝', deduct:'⚠️' };
+    return `
+    <div class="tx-row">
+      <div class="tx-inner">
+        <div class="tx-left">
+          <div class="tx-icon ${isOut?'out':'in'}">${icons[tx.type]||'💱'}</div>
+          <div>
+            <div class="tx-type">${tx.type} — <span style="color:rgba(255,255,255,0.5);font-size:11px">${tx.userName}</span></div>
+            <div class="tx-date">${tx.date} · ${tx.userEmail}</div>
+          </div>
+        </div>
+        <div>
+          <div class="tx-amount ${isOut?'out':'in'}">${isOut?'-':'+'}$${tx.amount}</div>
+          <span class="tx-status ${statusOk?'ok':'pending'}">${tx.status}</span>
+        </div>
+      </div>
+      ${tx.note?`<div class="tx-hash" style="color:rgba(245,158,11,0.7)">Note: ${tx.note}</div>`:''}
+    </div>`;
+  }).join('')}`;
+}
+
+function renderAdminUsers(filteredUsers) {
+  return `
+  <input class="admin-search" placeholder="🔍 Search by name or email..." value="${adminSearch}"
+    oninput="adminSearch=this.value; refreshAdminPanel()" />
+  ${filteredUsers.length===0?`<div class="empty-state">No users found</div>`:''}
+  ${filteredUsers.map(([email,u]) => `
+  <div class="admin-user-card">
+    <div class="admin-user-header">
+      <div>
+        <div class="admin-user-name">${u.name}</div>
+        <div class="admin-user-email">${email}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="admin-user-bal">$${(u.balance||0).toFixed(2)}</div>
+        <div class="admin-user-bal-lbl">Balance</div>
+      </div>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Total Deposit</span>
+      <span class="admin-user-row-val" style="color:#3b82f6">$${(u.totalDeposit||0).toFixed(2)}</span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Total Withdrawn</span>
+      <span class="admin-user-row-val" style="color:#ef4444">$${(u.totalWithdrawn||0).toFixed(2)}</span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Total Profit</span>
+      <span class="admin-user-row-val" style="color:#00C896">$${(u.totalProfit||0).toFixed(2)}</span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Referral Code</span>
+      <span class="admin-user-row-val">${u.referralCode}</span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Invited By</span>
+      <span class="admin-user-row-val" style="color:#f59e0b">
+        ${u.referredBy ? (users[(u.referredBy||'').toLowerCase().trim()]?.name || u.referredBy) : '<span style="color:rgba(255,255,255,0.3)">No Referrer</span>'}
+      </span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Direct Referrals</span>
+      <span class="admin-user-row-val">${(u.referrals||[]).length} people</span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Team Total Deposit</span>
+      <span class="admin-user-row-val" style="color:#3b82f6">$${getTeamTotalDeposit(email).toFixed(2)}</span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Team Salary Tier</span>
+      <span class="admin-user-row-val" style="color:#00C896">
+        ${(()=>{const t=getTeamSalaryTier(getTeamTotalDeposit(email));return t?`${t.label} — $${t.bonus}/month`:'<span style="color:rgba(255,255,255,0.3)">No Tier Yet</span>';})()}
+      </span>
+    </div>
+    <div class="admin-user-row">
+      <span class="admin-user-row-lbl">Transactions</span>
+      <span class="admin-user-row-val">${(u.transactions||[]).length}</span>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="admin-action-btn btn-approve" onclick="adminAddBalance('${email}')">+ Add Balance</button>
+      <button class="admin-action-btn btn-deduct" onclick="adminDeductBalance('${email}')">− Deduct Balance</button>
+      <button class="admin-action-btn btn-reject" onclick="adminResetBalance('${email}')">Reset Balance</button>
+    </div>
+  </div>`).join('')}`;
+}
+
+function renderAdminPending(pendingDeposits, pendingWithdrawals) {
+  return `
+  ${pendingDeposits.length>0?`
+  <div class="admin-section-title">⬇️ Pending Deposits (${pendingDeposits.length})</div>
+  ${pendingDeposits.map(tx=>`
+  <div class="pending-tx-card">
+    <div class="pending-tx-top">
+      <div>
+        <div class="pending-tx-user">${tx.userName}</div>
+        <div class="pending-tx-email">${tx.userEmail}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="pending-tx-amt">+$${tx.amount}</div>
+        <div class="pending-tx-type">Deposit • ${tx.date}</div>
+      </div>
+    </div>
+    ${tx.txHash&&tx.txHash!=='-'?`<div style="font-size:11px;color:rgba(255,255,255,0.3);background:rgba(0,0,0,0.2);border-radius:8px;padding:5px 10px;margin-bottom:8px">TX: ${tx.txHash}</div>`:''}
+    <div class="pending-tx-actions">
+      <button class="admin-action-btn btn-reject" onclick="adminRejectTx('${tx.userEmail}',${tx.id})">✕ Reject</button>
+      <button class="admin-action-btn btn-approve" onclick="adminApproveTx('${tx.userEmail}',${tx.id},'deposit')">✓ Approve</button>
+    </div>
+  </div>`).join('')}`:''}
+
+  ${pendingWithdrawals.length>0?`
+  <div class="admin-section-title">⬆️ Pending Withdrawals (${pendingWithdrawals.length})</div>
+  ${pendingWithdrawals.map(tx=>`
+  <div class="pending-tx-card" style="border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.06)">
+    <div class="pending-tx-top">
+      <div>
+        <div class="pending-tx-user">${tx.userName}</div>
+        <div class="pending-tx-email">${tx.userEmail}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="pending-tx-amt" style="color:#ef4444">-$${tx.amount}</div>
+        <div class="pending-tx-type">Withdrawal • ${tx.date}</div>
+      </div>
+    </div>
+
+    <!-- Amount Detail -->
+    <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:10px 12px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;color:rgba(255,255,255,0.45)">Gross Amount</span>
+        <span style="font-size:13px;font-weight:700;color:#fff">$${tx.amount} USDT</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;color:rgba(255,255,255,0.45)">7% Fee</span>
+        <span style="font-size:12px;color:#ef4444">-$${tx.tax||((tx.amount*0.07).toFixed(2))}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;margin-top:4px">
+        <span style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.7)">💸 Send to User</span>
+        <span style="font-size:15px;font-weight:800;color:#00C896">$${tx.netAmount||((tx.amount*0.93).toFixed(2))} USDT</span>
+      </div>
+    </div>
+
+    <!-- Wallet Address -->
+    <div style="background:rgba(0,200,150,0.06);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:10px 12px;margin-bottom:10px">
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:5px;font-weight:600;letter-spacing:0.5px">📬 WALLET ADDRESS (BEP-20)</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="font-size:12px;color:#00C896;font-family:monospace;word-break:break-all;flex:1">${tx.walletAddress || tx.txHash || 'Address not saved'}</div>
+        ${tx.walletAddress ? `<button onclick="navigator.clipboard.writeText('${tx.walletAddress}').then(()=>showNotif('Address copied!'))" style="background:rgba(0,200,150,0.15);border:1px solid rgba(0,200,150,0.3);color:#00C896;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit">📋 Copy</button>` : ''}
+      </div>
+    </div>
+
+    <div class="pending-tx-actions">
+      <button class="admin-action-btn btn-reject" onclick="adminRejectTx('${tx.userEmail}',${tx.id})">✕ Reject</button>
+      <button class="admin-action-btn btn-approve" onclick="adminApproveTx('${tx.userEmail}',${tx.id},'withdraw')">✓ Approve & Pay</button>
+    </div>
+  </div>`).join('')}`:''}
+
+
+  ${pendingDeposits.length===0&&pendingWithdrawals.length===0?`
+  <div class="empty-state" style="padding:60px 0">
+    ✅ No pending requests!<br/>
+    <span style="font-size:12px;color:rgba(255,255,255,0.2)">All transactions are processed</span>
+  </div>`:''}`;
+}
+
+// ─── Admin Tools ──────────────────────────────────────────────────────────────
+function renderAdminTools() {
+  const usersWithoutReferral = Object.entries(users).filter(([e,u]) => !u.referredBy && e !== currentUser.email);
+  const usersWithReferral = Object.entries(users).filter(([e,u]) => u.referredBy && e !== currentUser.email);
+  
+  return `
+  <div class="admin-section-title">🔧 Admin Tools & Fixes</div>
+  
+  <!-- Referral Fix Section -->
+  <div style="background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:14px;padding:18px;margin-bottom:18px">
+    <div style="font-size:15px;font-weight:800;color:#00C896;margin-bottom:12px">🤝 Fix Missing Referrals</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.6">
+      Old users ke <b>referredBy field missing</b> ho sakha hai. Ye tool un sab ko scan karke match karo referrals array se.
+    </div>
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:18px;font-weight:800;color:#ef4444">${usersWithoutReferral.length}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px">Missing referredBy</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:18px;font-weight:800;color:#00C896">${usersWithReferral.length}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px">Already linked</div>
+      </div>
+    </div>
+    
+    <button onclick="fixMissingReferrals()" style="width:100%;background:linear-gradient(135deg,#00C896,#0057e7);border:none;color:#fff;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit">
+      🔧 Scan & Fix Missing Referrals
+    </button>
+    <button onclick="diagnoseMissingReferrals()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px">
+      🔍 Diagnose (show details in console)
+    </button>
+    <div id="diagnoseOutput" style="margin-top:12px;font-size:11px;color:rgba(255,255,255,0.6);white-space:pre-wrap;font-family:monospace"></div>
+  </div>
+  
+  <!-- Sync to Firestore -->
+  <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:14px;padding:18px">
+    <div style="font-size:15px;font-weight:800;color:#6c63ff;margin-bottom:12px">☁️ Sync to Firestore</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.6">
+      Saare users ko Firestore mein sync karo. Ye ensure karo ke referrals properly saved hain.
+    </div>
+    <button onclick="syncAllToFirebase()" style="width:100%;background:linear-gradient(135deg,#6c63ff,#3b82f6);border:none;color:#fff;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit">
+      ☁️ Sync All Users to Firestore
+    </button>
+  </div>
+
+  <!-- Duplicate Document Cleanup -->
+  <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:18px;margin-top:18px">
+    <div style="font-size:15px;font-weight:800;color:#ef4444;margin-bottom:12px">🗑️ Clean Up Duplicate User Docs</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.6">
+      Kuch users ke 2 Firestore documents hain (purana <code>email_com</code> key format aur naya <code>email|D|com</code> format). Ye duplicate hone se data overwrite ho sakta hai random order se. Ye tool dono ka best data ek mein merge karke purana wala delete karega.
+    </div>
+    <button onclick="cleanupDuplicateUserDocs(false)" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px">
+      🔍 Preview Duplicates (no changes)
+    </button>
+    <button onclick="cleanupDuplicateUserDocs(true)" style="width:100%;background:linear-gradient(135deg,#ef4444,#b91c1c);border:none;color:#fff;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit">
+      🗑️ Merge & Delete Duplicates
+    </button>
+    <div id="cleanupOutput" style="margin-top:12px;font-size:11px;color:rgba(255,255,255,0.6);white-space:pre-wrap;font-family:monospace"></div>
+  </div>
+  `;
+}
+
+// ─── Admin Backup & Restore ────────────────────────────────────────────────────
+function renderAdminBackup() {
+  const userCount = Object.keys(users).filter(e => e !== currentUser.email).length;
+  const dataSize  = (JSON.stringify(users).length / 1024).toFixed(1);
+  const lastBackup = localStorage.getItem('ce_last_backup') || 'Kabhi nahi';
+  return `
+  <div class="admin-section-title">💾 Data Backup & Restore</div>
+
+  <!-- Stats -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+    <div style="background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:12px;padding:14px;text-align:center">
+      <div style="font-size:22px;font-weight:800;color:#00C896">${userCount}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">Total Users</div>
+    </div>
+    <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:12px;padding:14px;text-align:center">
+      <div style="font-size:22px;font-weight:800;color:#6c63ff">${dataSize}KB</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">Data Size</div>
+    </div>
+    <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:14px;text-align:center">
+      <div style="font-size:11px;font-weight:700;color:#f59e0b;margin-top:2px">Last Backup</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px">${lastBackup}</div>
+    </div>
+  </div>
+
+  <!-- Download Backup -->
+  <div style="background:rgba(0,200,150,0.06);border:1px solid rgba(0,200,150,0.2);border-radius:14px;padding:18px;margin-bottom:14px">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:6px">📥 Backup Download</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:14px">Saara data JSON file mein download ho jayega. Phone ki gallery ya downloads mein save hoga.</div>
+    <button onclick="downloadBackup()" style="width:100%;background:linear-gradient(135deg,#00C896,#0057e7);border:none;color:#fff;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit">
+      📥 Backup Download Karein
+    </button>
+  </div>
+
+  <!-- Restore -->
+  <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:18px;margin-bottom:14px">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:6px">📤 Backup Restore</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:14px">Pehle download ki hui backup file select karein. Purana data replace ho jayega.</div>
+    <label style="display:block;width:100%;background:rgba(245,158,11,0.12);border:1.5px dashed rgba(245,158,11,0.4);border-radius:12px;padding:14px;text-align:center;cursor:pointer;color:#f59e0b;font-size:14px;font-weight:700">
+      📂 Backup File Select Karein
+      <input type="file" accept=".json" onchange="restoreBackup(event)" style="display:none" />
+    </label>
+  </div>
+
+  <!-- Warning -->
+  <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:14px">
+    <div style="font-size:12px;color:rgba(239,68,68,0.8);font-weight:600">⚠️ Zaroori Baat</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;line-height:1.6">
+      • Browser clear karne se <b style="color:#fff">sab data delete</b> ho jata hai<br/>
+      • Har hafte backup lena <b style="color:#fff">zaroori</b> hai<br/>
+      • Backup file safe jagah rakhein (Google Drive / Email)
+    </div>
+  </div>`;
+}
+
+function downloadBackup() {
+  try {
+    const backupData = {
+      version: 'CryptoEarnPro-v10',
+      date: new Date().toISOString(),
+      adminEmail: currentUser.email,
+      users: users
+    };
+    const json = JSON.stringify(backupData, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    const dateStr = new Date().toLocaleDateString('en-GB').replace(/\//g,'-');
+    a.href     = url;
+    a.download = `CryptoEarnPro-Backup-${dateStr}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    // Save last backup time
+    localStorage.setItem('ce_last_backup', new Date().toLocaleString());
+    showNotif('✅ Backup successfully download ho gaya!');
+    refreshAdminPanel();
+  } catch(e) {
+    showNotif('❌ Backup download fail hua', 'error');
+  }
+}
+
+function restoreBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      // Validate backup format
+      if (!data.users || !data.version) {
+        showNotif('❌ Invalid backup file — sahi file select karein', 'error');
+        return;
+      }
+      if (!confirm(`⚠️ Kya aap sure hain?\n\nIs backup se restore karne par:\n• Date: ${data.date ? new Date(data.date).toLocaleString() : 'Unknown'}\n• Users: ${Object.keys(data.users).length}\n\nMOJOODA DATA REPLACE HO JAYEGA!`)) return;
+      // Restore users
+      users = data.users;
+      saveUsers();
+      // Restore admin email if present
+      if (data.adminEmail) {
+        localStorage.setItem('ce_admin_email', data.adminEmail);
+      }
+      showNotif('✅ Backup restore ho gaya! App reload ho raha hai...');
+      setTimeout(() => location.reload(), 1500);
+    } catch(err) {
+      showNotif('❌ File read error — valid JSON file select karein', 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function setAdminTab(t) {
+  adminTab = t;
+  refreshAdminPanel();
+}
+
+async function refreshAdminPanel() {
+  // Firestore se latest data load karo
+  await _loadAllUsersFromFirestore();
+  const page = document.querySelector('.page');
+  if (page && isAdmin()) page.innerHTML = renderAdminPanel();
+}
+
+// ─── Fix Missing Referrals Function ───────────────────────────────────────────
+function diagnoseMissingReferrals() {
+  const myEmail = (currentUser.email || '').toLowerCase().trim();
+  const missing = Object.entries(users).filter(([e,u]) => !u.referredBy && e.toLowerCase().trim() !== myEmail);
+  
+  // Build a set of every name that appears in ANY referrer's referrals array
+  const allReferralEntries = [];
+  for (const [refEmail, referrer] of Object.entries(users)) {
+    if (referrer.referrals && referrer.referrals.length > 0) {
+      referrer.referrals.forEach(r => allReferralEntries.push({ referrerEmail: refEmail, name: r.name, email: r.email||null }));
+    }
+  }
+  
+  let report = `=== ${missing.length} users with missing referredBy ===\n\n`;
+  missing.forEach(([email, u]) => {
+    const matchesByName = allReferralEntries.filter(r => r.name === u.name);
+    const matchesByEmail = allReferralEntries.filter(r => r.email && r.email.toLowerCase().trim() === email.toLowerCase().trim());
+    report += `• ${email} (name: "${u.name}")\n`;
+    if (matchesByEmail.length > 0) {
+      report += `   ✅ found in referrer "${matchesByEmail[0].referrerEmail}"'s referrals array BY EMAIL\n`;
+    } else if (matchesByName.length === 1) {
+      report += `   ⚠️ found in referrer "${matchesByName[0].referrerEmail}"'s referrals array by NAME only\n`;
+    } else if (matchesByName.length > 1) {
+      report += `   ❌ AMBIGUOUS — ${matchesByName.length} referrers have a "${u.name}" entry: ${matchesByName.map(m=>m.referrerEmail).join(', ')}\n`;
+    } else {
+      report += `   ❌ ORPHAN — not found in ANY referrer's referrals array. This user was never recorded as someone's referral (referral code likely wasn't used at signup, or that signup write failed).\n`;
+    }
+  });
+  
+  console.log(report);
+  document.getElementById('diagnoseOutput').textContent = report;
+  showNotif('🔍 Diagnosis printed below & in console', 'info');
+}
+
+async function fixMissingReferrals() {
+  if (!confirm('⚠️ Ye operation scan karega aur missing referrals ko fix karega.\n\nKya aap sure hain?')) return;
+  
+  showNotif('🔧 Scanning users...', 'info');
+  let fixedCount = 0;
+  let skippedAmbiguous = 0;
+  
+  // Iterate through all referrers
+  for (const [refEmailRaw, referrer] of Object.entries(users)) {
+    const refEmail = refEmailRaw.toLowerCase().trim();
+    if (!referrer.referrals || referrer.referrals.length === 0) continue;
+    
+    // Check each referral entry
+    for (const refEntry of referrer.referrals) {
+      let refUser = null;
+
+      // Prefer matching by email if the referral entry has one (new signups always do)
+      if (refEntry.email) {
+        const key = refEntry.email.toLowerCase().trim();
+        if (users[key]) refUser = [key, users[key]];
+      }
+
+      // Fallback: match by name, but only if exactly one other user has that name
+      if (!refUser) {
+        const candidates = Object.entries(users).filter(([e,u]) => u.name === refEntry.name && e.toLowerCase().trim() !== refEmail);
+        if (candidates.length === 1) {
+          refUser = candidates[0];
+        } else if (candidates.length > 1) {
+          skippedAmbiguous++; // multiple users share this name — don't guess
+          continue;
+        }
+      }
+
+      if (!refUser) continue;
+      
+      const [refUserEmailRaw, refUserObj] = refUser;
+      const refUserEmail = refUserEmailRaw.toLowerCase().trim();
+      
+      // Agar user ke paas referredBy nahi ha, set karo (always normalized)
+      if (!refUserObj.referredBy) {
+        refUserObj.referredBy = refEmail;
+        users[refUserEmail] = refUserObj;
+        await _saveUserToFirestore(refUserEmail, refUserObj);
+        fixedCount++;
+      } else if (refUserObj.referredBy.toLowerCase().trim() !== refEmail) {
+        // referredBy exists but isn't normalized — normalize it in place
+        const normalized = refUserObj.referredBy.toLowerCase().trim();
+        if (normalized !== refUserObj.referredBy) {
+          refUserObj.referredBy = normalized;
+          users[refUserEmail] = refUserObj;
+          await _saveUserToFirestore(refUserEmail, refUserObj);
+        }
+      }
+    }
+  }
+  
+  // Also save referrers to Firestore
+  for (const [email, user] of Object.entries(users)) {
+    if (user.referrals && user.referrals.length > 0) {
+      await _saveUserToFirestore(email.toLowerCase().trim(), user);
+    }
+  }
+  
+  const msg = skippedAmbiguous > 0
+    ? `✅ Fixed ${fixedCount} users! ${skippedAmbiguous} skipped (duplicate names — fix manually).`
+    : `✅ Fixed ${fixedCount} users! Firestore sync ho gya.`;
+  showNotif(msg, 'success');
+  setTimeout(() => refreshAdminPanel(), 1000);
+}
+
+// ─── Clean Up Duplicate User Docs (old underscore key + new |D| key) ─────────
+async function cleanupDuplicateUserDocs(actuallyDelete) {
+  if (!window._fbDb || !window._fbFns) { showNotif('❌ Firestore not connected', 'error'); return; }
+  if (actuallyDelete && !confirm('⚠️ Ye purane duplicate documents PERMANENTLY DELETE karega Firestore se (best data merge karne ke baad).\n\nYakeen pukha? Pehle Preview chala lo.')) return;
+
+  const { collection, getDocs, doc, setDoc, deleteDoc } = window._fbFns;
+  showNotif(actuallyDelete ? '🗑️ Cleaning up...' : '🔍 Scanning...', 'info');
+
+  const snap = await getDocs(collection(window._fbDb, 'users'));
+  const byEmail = {};
+  snap.forEach(d => {
+    const isNewKeyFormat = d.id.includes('|D|');
+    const rawEmail = isNewKeyFormat ? _keyToEmail(d.id) : d.id.replace(/_/g, '.');
+    const email = rawEmail.toLowerCase().trim();
+    byEmail[email] = byEmail[email] || [];
+    byEmail[email].push({ data: d.data(), isNewKeyFormat, docId: d.id });
+  });
+
+  const score = (d) => {
+    let s = 0;
+    if (d.data.referredBy) s += 10;
+    if (d.data.referrals && d.data.referrals.length) s += d.data.referrals.length;
+    if (d.data.totalDeposit) s += 1;
+    if (d.data.transactions && d.data.transactions.length) s += 1;
+    if (d.isNewKeyFormat) s += 0.5;
+    return s;
+  };
+
+  let report = '';
+  let mergedCount = 0;
+  let deletedCount = 0;
+
+  for (const email of Object.keys(byEmail)) {
+    const docs = byEmail[email];
+    if (docs.length < 2) continue; // no duplicate
+
+    docs.sort((a,b) => score(b) - score(a));
+    const winner = docs[0];
+    const losers = docs.slice(1);
+
+    // Merge missing referral fields from losers into winner
+    const merged = { ...winner.data };
+    for (const loser of losers) {
+      if (!merged.referredBy && loser.data.referredBy) merged.referredBy = loser.data.referredBy;
+      if ((!merged.referrals || merged.referrals.length===0) && loser.data.referrals && loser.data.referrals.length) merged.referrals = loser.data.referrals;
+    }
+    if (merged.referredBy) merged.referredBy = merged.referredBy.toLowerCase().trim();
+
+    report += `• ${email}: keeping "${winner.docId}", `;
+    report += actuallyDelete ? `merging+deleting "${losers.map(l=>l.docId).join(', ')}"\n` : `WOULD delete "${losers.map(l=>l.docId).join(', ')}"\n`;
+
+    if (actuallyDelete) {
+      const safeKey = _emailToKey(email);
+      await setDoc(doc(window._fbDb, 'users', safeKey), merged);
+      for (const loser of losers) {
+        if (loser.docId !== safeKey) {
+          await deleteDoc(doc(window._fbDb, 'users', loser.docId));
+          deletedCount++;
+        }
+      }
+      mergedCount++;
+      users[email] = merged;
+    }
+  }
+
+  if (!report) report = 'No duplicate documents found. ✅';
+  document.getElementById('cleanupOutput').textContent = report;
+  console.log(report);
+
+  if (actuallyDelete) {
+    showNotif(`✅ Merged ${mergedCount} users, deleted ${deletedCount} old docs.`, 'success');
+    try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+    setTimeout(() => refreshAdminPanel(), 1000);
+  } else {
+    showNotif('🔍 Preview done — see details below', 'info');
+  }
+}
+
+// ─── Sync All to Firestore ────────────────────────────────────────────────────
+async function syncAllToFirebase() {
+  if (!confirm('⚠️ Ye operation saare users ko Firestore mein sync karega.\n\nKya aap sure hain?')) return;
+  
+  showNotif('☁️ Syncing...', 'info');
+  let syncedCount = 0;
+  
+  for (const [email, userData] of Object.entries(users)) {
+    try {
+      await _saveUserToFirestore(email, userData);
+      syncedCount++;
+    } catch(e) {
+      console.error('Sync error for', email, e);
+    }
+  }
+  
+  showNotif(`✅ ${syncedCount} users synced to Firestore!`, 'success');
+  setTimeout(() => refreshAdminPanel(), 1000);
+}
+
+async function adminApproveTx(email, txId, type) {
+  const u = users[email];
+  if (!u) return;
+  const tx = u.transactions.find(t => t.id === txId);
+  if (!tx) return;
+  tx.status = 'confirmed';
+  if (type === 'deposit') {
+    u.balance = (u.balance||0) + tx.amount;
+    u.totalDeposit = (u.totalDeposit||0) + tx.amount;
+
+    // 50% of the deposit is locked for 15 days
+    const lockedAmount = parseFloat((tx.amount * DEPOSIT_LOCK_RATIO).toFixed(2));
+    const unlockDate = new Date(Date.now() + DEPOSIT_LOCK_DAYS * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    u.depositLocks = u.depositLocks || [];
+    u.depositLocks.push({ amount: lockedAmount, unlockDate, depositTxId: txId });
+    u.lockedBalance = computeLockedBalance(u);
+
+    // 1st deposit bonus for referrer — only triggers on user's very first deposit
+    const isFirstDeposit = (u.depositLocks.length === 1); // just pushed above, so 1 = first time
+    const _normRefBy = u.referredBy ? u.referredBy.toLowerCase().trim() : null;
+    if (isFirstDeposit && _normRefBy && users[_normRefBy]) {
+      const referrer = users[_normRefBy];
+      const dep = tx.amount;
+      let bonus = 0;
+      if      (dep >= 100) bonus = 3;
+      else if (dep >= 25)  bonus = 2;
+      else if (dep >= 10)  bonus = 1;
+      if (bonus > 0) {
+        referrer.balance = (referrer.balance || 0) + bonus;
+        referrer.totalProfit = (referrer.totalProfit || 0) + bonus;
+        referrer.transactions = referrer.transactions || [];
+        referrer.transactions.unshift({
+          id: Date.now() + 500,
+          type: 'referral',
+          amount: bonus,
+          date: getDateTime(),
+          status: 'credited',
+          txHash: '-',
+          note: `1st deposit bonus — ${u.name} deposited $${dep}`
+        });
+        const refEntry = (referrer.referrals || []).find(r => r.name === u.name);
+        if (refEntry) {
+          refEntry.deposit = dep;
+          refEntry.commission = (refEntry.commission || 0) + bonus;
+          refEntry.firstDepositBonus = bonus;
+        }
+        // Save referrer to Firestore too
+        await _saveUserToFirestore(_normRefBy, referrer);
+        // Mark so bonus never triggers again for this user
+        u.firstDepositBonusPaid = true;
+      }
+    }
+  } else if (type === 'withdraw') {
+    u.balance = Math.max(0, (u.balance||0) - tx.amount);
+    u.totalWithdrawn = (u.totalWithdrawn||0) + tx.amount;
+  }
+  // Save approved user directly to Firestore
+  await _saveUserToFirestore(email, u);
+  users[email] = u;
+  try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+  showNotif(`${type==='deposit'?'Deposit':'Withdrawal'} approved for ${u.name}!`);
+  refreshAdminPanel();
+}
+
+function adminRejectTx(email, txId) {
+  const u = users[email];
+  if (!u) return;
+  const tx = u.transactions.find(t => t.id === txId);
+  if (!tx) return;
+  tx.status = 'rejected';
+  // Save rejected user directly to Firestore
+  _saveUserToFirestore(email, u);
+  users[email] = u;
+  try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+  showNotif(`Transaction rejected`, 'error');
+  refreshAdminPanel();
+}
+
+async function adminAddBalance(email) {
+  const amt = parseFloat(prompt(`Add balance to ${users[email]?.name}:\nEnter amount in USD:`)||'0');
+  if (!amt||amt<=0) return;
+  users[email].balance = (users[email].balance||0) + amt;
+  users[email].totalDeposit = (users[email].totalDeposit||0) + amt;
+  users[email].transactions = users[email].transactions||[];
+  users[email].transactions.unshift({ id: Date.now(), type:'deposit', amount: amt, date: getDateTime(), status:'confirmed', txHash:'Admin-Credit' });
+  await _saveUserToFirestore(email, users[email]);
+  try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+  showNotif(`$${amt} added to ${users[email].name}`);
+  refreshAdminPanel();
+}
+
+async function adminDeductBalance(email) {
+  const u = users[email];
+  if (!u) return;
+  const currentBal = (u.balance||0).toFixed(2);
+  const reason = prompt(`Deduct balance from ${u.name}\nCurrent Balance: $${currentBal}\n\nReason (e.g. "Deposit not received"):`);
+  if (reason === null) return; // cancelled
+  const amt = parseFloat(prompt(`Deduct amount from ${u.name}\nCurrent Balance: $${currentBal}\n\nEnter amount to deduct (USD):`)||'0');
+  if (!amt || amt <= 0) return showNotif('Invalid amount', 'error');
+  if (amt > (u.balance||0)) return showNotif(`Cannot deduct $${amt} — balance is only $${currentBal}`, 'error');
+  u.balance = Math.max(0, (u.balance||0) - amt);
+  u.totalDeposit = Math.max(0, (u.totalDeposit||0) - amt);
+  u.transactions = u.transactions||[];
+  u.transactions.unshift({
+    id: Date.now(),
+    type: 'deduct',
+    amount: amt,
+    date: getDateTime(),
+    status: 'deducted',
+    txHash: 'Admin-Deduct',
+    note: reason || 'Admin balance deduction'
+  });
+  await _saveUserToFirestore(email, u);
+  try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+  showNotif(`$${amt} deducted from ${u.name} — ${reason||'No reason given'}`, 'error');
+  refreshAdminPanel();
+}
+
+async function adminResetBalance(email) {
+  if (!confirm(`Reset balance for ${users[email]?.name} to $0?`)) return;
+  users[email].balance = 0;
+  await _saveUserToFirestore(email, users[email]);
+  try { localStorage.setItem('ce_users_cache', JSON.stringify(users)); } catch(e){}
+  showNotif(`Balance reset for ${users[email].name}`, 'error');
+  refreshAdminPanel();
+}
+
+// ─── Deposit ──────────────────────────────────────────────────────────────────
+function renderDeposit() {
+  return `
+  <div class="section-title">Deposit</div>
+  <div class="section-sub">Minimum deposit: $${MIN_DEPOSIT} USDT (BEP-20)</div>
+  <div class="addr-box">
+    <div class="addr-label">DEPOSIT ADDRESS · USDT BEP-20</div>
+    <div class="addr-text">${DEPOSIT_ADDRESS}</div>
+    <button class="copy-btn" id="copy-addr-btn" onclick="copyAddr()">📋 Copy Address</button>
+  </div>
+  <div class="mb14">
+    <label class="label">Amount (USD)</label>
+    <input class="input" id="dep-amt" type="number" inputmode="decimal" placeholder="Min. $${MIN_DEPOSIT}.00" oninput="updateDepCalc()" />
+  </div>
+  <div id="dep-calc" style="display:none" class="mb14"></div>
+  <button class="btn-primary" onclick="handleDeposit()">Confirm Deposit</button>
+  <div class="info-yellow">
+    <div class="info-yellow-title">⚠️ Instructions</div>
+    <div class="info-yellow-body">
+      1. Copy the BEP-20 address above<br/>
+      2. Send the exact USDT amount from your wallet<br/>
+      3. Balance will update after admin approval<br/>
+      4. Do not send directly from an exchange
+    </div>
+  </div>`;
+}
+
+function updateDepCalc() {
+  const amt = parseFloat(document.getElementById('dep-amt')?.value||0);
+  const box = document.getElementById('dep-calc');
+  if (!box) return;
+  if (amt >= MIN_DEPOSIT) {
+    const p = getPlan(amt);
+    box.style.cssText = 'display:block;background:rgba(0,200,150,0.07);border-radius:12px;padding:16px;margin-bottom:14px';
+    box.innerHTML = `
+      <div style="font-size:12px;font-weight:700;color:${p.color};margin-bottom:10px">📦 ${p.name} — ${p.label}/day</div>
+      <div class="row"><span class="row-label">Daily Profit (${p.label})</span><span class="row-value" style="color:${p.color}">$${(amt*p.rate).toFixed(2)}</span></div>
+      <div class="row"><span class="row-label">Monthly Return</span><span class="row-value" style="color:${p.color}">$${(amt*p.rate*30).toFixed(2)}</span></div>`;
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function copyAddr() {
+  navigator.clipboard.writeText(DEPOSIT_ADDRESS).catch(()=>{});
+  const btn = document.getElementById('copy-addr-btn');
+  if (btn) { btn.textContent = '✅ Address Copied!'; btn.classList.add('copied'); }
+  setTimeout(() => { if(btn){btn.textContent='📋 Copy Address';btn.classList.remove('copied');} }, 2000);
+}
+
+function handleDeposit() {
+  const amt = parseFloat(document.getElementById('dep-amt')?.value||0);
+  if (!amt||amt<MIN_DEPOSIT) return showNotif(`Minimum deposit is $${MIN_DEPOSIT}`, 'error');
+
+  // Add pending transaction to user's account
+  const txId = Date.now();
+  const tx = { id: txId, type: 'deposit', amount: amt, date: getDateTime(), status: 'pending', txHash: '-' };
+  if (!users[currentUser.email].transactions) users[currentUser.email].transactions = [];
+  users[currentUser.email].transactions.unshift(tx);
+  // Update currentUser in memory too
+  currentUser.transactions = users[currentUser.email].transactions;
+  saveUsers();
+
+  showNotif("Deposit submitted! Admin will confirm soon.");
+  document.getElementById('dep-amt').value = '';
+  updateDepCalc();
+}
+
+// ─── Withdraw ─────────────────────────────────────────────────────────────────
+function renderWithdraw() {
+  const u = users[currentUser.email] || currentUser;
+  const locked = computeLockedBalance(u);
+  const available = Math.max(0, (currentUser.balance || 0) - locked);
+  const hasLock = locked > 0;
+  return `
+  <div class="section-title">Withdraw</div>
+  <div class="section-sub">Minimum withdrawal: $${MIN_WITHDRAW} USDT (BEP-20)</div>
+  <div class="avail-balance">
+    <div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.45)">Total Balance</div>
+      <div style="font-size:26px;font-weight:800;color:#fff;margin-top:4px">$${currentUser.balance.toFixed(2)}</div>
+    </div>
+    <div style="font-size:36px">💰</div>
+  </div>
+  ${hasLock ? `
+  <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:12px 14px;margin-bottom:10px;font-size:12px;color:rgba(255,255,255,0.75)">
+    🔒 <b style="color:#f59e0b">$${locked.toFixed(2)} Locked</b> — 50% of your deposit is locked for 15 days from deposit date<br/>
+    <span style="color:rgba(255,255,255,0.45);margin-top:4px;display:block">✅ Available to withdraw now: <b style="color:#00C896">$${available.toFixed(2)}</b></span>
+  </div>` : ''}
+  <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:rgba(255,255,255,0.65)">
+    ⚠️ <b style="color:#ef4444">7% Withdrawal Fee</b> is applied — a 7% fee will be deducted from your requested amount
+  </div>
+  <div class="mb14">
+    <label class="label">Withdraw Amount (USD) — Available: $${available.toFixed(2)}</label>
+    <input class="input" id="wd-amt" type="number" inputmode="decimal" placeholder="Min. $${MIN_WITHDRAW}" oninput="updateWdCalc()" />
+  </div>
+  <div id="wd-calc" style="display:none;background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.25);border-radius:12px;padding:14px;margin-bottom:14px"></div>
+  <div class="mb22">
+    <label class="label">Your BEP-20 Wallet Address</label>
+    <input class="input" id="wd-addr" type="text" placeholder="0x..." />
+    <div class="warn-hint">⚠️ BEP-20 (BSC) only — wrong address = permanent loss</div>
+  </div>
+  <button class="btn-primary btn-purple" onclick="handleWithdraw()">Submit Withdrawal</button>
+  <div class="info-red">
+    ⏱ Processing time: up to 24 hours<br/>
+    🔒 Double-check your BEP-20 address<br/>
+    ❌ Wrong address = funds lost permanently
+  </div>`;
+}
+
+function updateWdCalc() {
+  const amt = parseFloat(document.getElementById('wd-amt')?.value||0);
+  const box = document.getElementById('wd-calc');
+  if (!box) return;
+  if (amt >= MIN_WITHDRAW) {
+    const tax = amt * WITHDRAW_TAX;
+    const receive = amt - tax;
+    box.style.display = 'block';
+    box.innerHTML = `
+      <div style="font-size:12px;font-weight:700;color:#6c63ff;margin-bottom:10px">💳 Withdrawal Breakdown</div>
+      <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span style="color:rgba(255,255,255,0.5)">Amount Requested</span><span style="color:#fff">$${amt.toFixed(2)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span style="color:rgba(255,255,255,0.5)">7% Fee Deduction</span><span style="color:#ef4444">-$${tax.toFixed(2)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:14px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);margin-top:4px"><span style="color:rgba(255,255,255,0.7)">You Will Receive</span><span style="color:#00C896">$${receive.toFixed(2)}</span></div>`;
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function handleWithdraw() {
+  const amt  = parseFloat(document.getElementById('wd-amt')?.value||0);
+  const addr = document.getElementById('wd-addr')?.value||'';
+  if (!amt||amt<MIN_WITHDRAW) return showNotif(`Minimum withdrawal is $${MIN_WITHDRAW}`, 'error');
+  if (!addr||!addr.startsWith('0x')) return showNotif("Please enter a valid BEP-20 address", 'error');
+
+  // Enforce 50% deposit lock: only freely available balance can be withdrawn
+  const u = users[currentUser.email];
+  const locked = computeLockedBalance(u);
+  const available = Math.max(0, (currentUser.balance || 0) - locked);
+  if (amt > available) {
+    return showNotif(`You can only withdraw $${available.toFixed(2)} — $${locked.toFixed(2)} is locked for 15 days`, 'error');
+  }
+
+  const tax = parseFloat((amt * WITHDRAW_TAX).toFixed(2));
+  const netAmt = parseFloat((amt - tax).toFixed(2));
+
+  // Add pending withdrawal — full address saved for admin
+  const txId = Date.now();
+  const tx = { id: txId, type: 'withdraw', amount: amt, tax: tax, netAmount: netAmt, date: getDateTime(), status: 'pending', txHash: addr.substring(0,10)+'...', walletAddress: addr };
+  users[currentUser.email].transactions = users[currentUser.email].transactions||[];
+  users[currentUser.email].transactions.unshift(tx);
+  currentUser.transactions = users[currentUser.email].transactions;
+  saveUsers();
+
+  showNotif(`$${amt} withdrawal submitted! (After 7% fee: $${netAmt})`);
+  document.getElementById('wd-amt').value = '';
+  document.getElementById('wd-addr').value = '';
+  const box = document.getElementById('wd-calc');
+  if (box) box.style.display = 'none';
+}
+
+// ─── Referral ─────────────────────────────────────────────────────────────────
+function renderReferral() {
+  if (window._firebaseLoading) {
+    return `<div class="empty-state" style="padding:40px 20px">
+      <div style="font-size:32px;margin-bottom:12px">⏳</div>
+      <div style="font-size:15px;font-weight:700;margin-bottom:6px">Loading Referrals...</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4)">Please wait while we fetch your data</div>
+    </div>`;
+  }
+  const refTotal = currentUser.referrals.reduce((s,r)=>s+r.commission,0).toFixed(2);
+  return `
+  <div class="section-title">Referral Program</div>
+  <div class="section-sub">Earn 10% of your referral's daily profit — every day, automatically!</div>
+
+  <!-- 1st Deposit Bonus -->
+  <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:16px;margin-bottom:14px">
+    <div style="font-weight:800;font-size:15px;color:#f59e0b;margin-bottom:12px">🎁 1st Deposit Bonus</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:10px">When your invited friend makes their FIRST deposit, you get an instant bonus:</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:10px 14px">
+        <div style="font-size:13px;color:rgba(255,255,255,0.75)">🥉 Friend deposits <b style="color:#fff">$10+</b></div>
+        <div style="font-size:16px;font-weight:800;color:#00C896">+$1</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:10px;padding:10px 14px">
+        <div style="font-size:13px;color:rgba(255,255,255,0.75)">🥈 Friend deposits <b style="color:#fff">$25+</b></div>
+        <div style="font-size:16px;font-weight:800;color:#6c63ff">+$2</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:10px 14px">
+        <div style="font-size:13px;color:rgba(255,255,255,0.75)">🥇 Friend deposits <b style="color:#fff">$100+</b></div>
+        <div style="font-size:16px;font-weight:800;color:#f59e0b">+$3</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.35)">⚡ One-time bonus · Credited instantly when admin approves deposit</div>
+  </div>
+
+  <!-- How Daily Commission Works -->
+  <div style="background:rgba(0,200,150,0.07);border:1px solid rgba(0,200,150,0.25);border-radius:14px;padding:16px;margin-bottom:18px">
+    <div style="font-weight:800;font-size:15px;color:#00C896;margin-bottom:10px">💡 Daily Commission (Ongoing)</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.8">
+      ✅ Invite a friend using your referral code<br/>
+      ✅ <b style="color:#00C896">Level 1:</b> Earn <b>10%</b> of your direct referral's daily profit<br/>
+      ✅ <b style="color:#6c63ff">Level 2:</b> Earn <b>5%</b> of your referral's referral's daily profit<br/>
+      ✅ Commission is credited automatically every day<br/>
+      ✅ No limits — more referrals = more daily income!
+    </div>
+  </div>
+
+  <div class="ref-grid">
+    <div class="ref-card" style="background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.3)">
+      <div class="ref-pct" style="color:#00C896">10%</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px">Level 1</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35)">Direct referral profit</div>
+    </div>
+    <div class="ref-card" style="background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.3)">
+      <div class="ref-pct" style="color:#6c63ff">5%</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px">Level 2</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35)">Sub-referral profit</div>
+    </div>
+  </div>
+  <div class="card mb14">
+    <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:8px">Your Referral Code</div>
+    <div class="ref-code-box">${currentUser.referralCode}</div>
+    <div class="ref-link">${APP_URL}/ref/${currentUser.referralCode}</div>
+    <div class="ref-btns">
+      <button class="ref-btn" id="copy-ref-btn"
+        style="background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.4);color:#00C896"
+        onclick="copyRef()">📋 Copy Link</button>
+      <button class="ref-btn"
+        style="background:linear-gradient(135deg,rgba(37,211,102,0.2),rgba(37,211,102,0.1));border:1px solid rgba(37,211,102,0.4);color:#25D366"
+        onclick="shareWA()">📲 WhatsApp</button>
+    </div>
+  </div>
+  <div class="wa-preview">
+    <div class="wa-title">📱 WhatsApp Preview:</div>
+    <div class="wa-body">
+      💰 CryptoEarn Pro — USDT Investment!<br/>
+      📦 Plan 1: $6–$20 → 2.0%/day<br/>
+      📦 Plan 2: $21–$50 → 2.3%/day<br/>
+      📦 Plan 3: $50+ → 2.5%/day<br/>
+      ✅ 10% daily referral commission<br/>
+      🔗 ${APP_URL}/ref/${currentUser.referralCode}
+    </div>
+  </div>
+  ${(()=>{
+    // Normalize email for consistent comparison
+    const myEmail = (currentUser.email || '').toLowerCase().trim();
+    // Level 1 — direct referrals (case-insensitive email match)
+    const l1Users = Object.entries(users).filter(([e,u]) => u.referredBy && u.referredBy.toLowerCase().trim() === myEmail);
+    // Level 2 — referrals of referrals
+    const l1Emails = l1Users.map(([e])=>e.toLowerCase().trim());
+    const l2Users = Object.entries(users).filter(([e,u]) => u.referredBy && l1Emails.includes(u.referredBy.toLowerCase().trim()));
+
+    // Team stats
+    const teamDeposit = getTeamTotalDeposit(currentUser.email);
+    const teamWithdraw = [...l1Users,...l2Users].reduce((s,[,u])=>s+(u.totalWithdrawn||0),0);
+    const tier = getTeamSalaryTier(teamDeposit);
+
+    // Next tier
+    const nextTier = TEAM_SALARY_TIERS.slice().reverse().find(t => t.minDeposit > teamDeposit);
+
+    return `
+    <!-- Team Stats -->
+    <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.25);border-radius:14px;padding:16px;margin-bottom:14px">
+      <div style="font-weight:800;font-size:15px;color:#6c63ff;margin-bottom:12px">📊 My Team Stats</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#00C896">${l1Users.length}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45)">Level 1 Members</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#6c63ff">${l2Users.length}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45)">Level 2 Members</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#3b82f6">$${teamDeposit.toFixed(0)}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45)">Team Total Deposit</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#ef4444">$${teamWithdraw.toFixed(0)}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45)">Team Total Withdraw</div>
+        </div>
+      </div>
+      ${tier ? `
+      <div style="background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.3);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:13px;color:rgba(255,255,255,0.6)">🏆 Monthly Salary Tier</div>
+        <div style="font-size:18px;font-weight:800;color:#00C896">${tier.label} — $${tier.bonus}/month</div>
+      </div>` : nextTier ? `
+      <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:10px;text-align:center">
+        <div style="font-size:12px;color:rgba(255,255,255,0.5)">Next Salary Tier</div>
+        <div style="font-size:13px;font-weight:700;color:#f59e0b">$${(nextTier.minDeposit - teamDeposit).toFixed(0)} more team deposit needed for $${nextTier.bonus}/month</div>
+      </div>` : ''}
+    </div>
+
+    <!-- Level 1 Users -->
+    ${l1Users.length>0?`
+    <div style="font-weight:700;font-size:15px;color:#00C896;margin-bottom:10px">🟢 Level 1 — Direct Referrals (${l1Users.length})</div>
+    ${l1Users.map(([e,u])=>`
+    <div class="tx-row" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,200,150,0.2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#00C896">${u.name.charAt(0)}</div>
+        <div>
+          <div style="font-size:14px;font-weight:600">${u.name}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4)">Deposit: $${(u.totalDeposit||0).toFixed(2)} • Withdraw: $${(u.totalWithdrawn||0).toFixed(2)}</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:#00C896">Level 1</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4)">10% comm</div>
+      </div>
+    </div>`).join('')}` : ''}
+
+    <!-- Level 2 Users -->
+    ${l2Users.length>0?`
+    <div style="font-weight:700;font-size:15px;color:#6c63ff;margin-bottom:10px;margin-top:14px">🟣 Level 2 — Indirect Referrals (${l2Users.length})</div>
+    ${l2Users.map(([e,u])=>`
+    <div class="tx-row" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;border-radius:50%;background:rgba(108,99,255,0.2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#6c63ff">${u.name.charAt(0)}</div>
+        <div>
+          <div style="font-size:14px;font-weight:600">${u.name}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4)">Deposit: $${(u.totalDeposit||0).toFixed(2)} • Invited by: ${users[(u.referredBy||'').toLowerCase().trim()]?.name||''}</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:#6c63ff">Level 2</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4)">5% comm</div>
+      </div>
+    </div>`).join('')}` : ''}
+
+    ${l1Users.length===0&&l2Users.length===0?`
+    <div class="empty-state">No referrals yet.<br/><span style="color:#25D366">Share on WhatsApp! 📲</span></div>`:''}
+
+    ${refTotal>0?`
+    <div style="margin-top:14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:16px">
+      <div style="font-weight:700;color:#f59e0b;margin-bottom:6px">Total Referral Earnings</div>
+      <div style="font-size:30px;font-weight:800;color:#fff">$${refTotal}</div>
+    </div>`:''}
+    `;
+  })()}`;
+}
+
+function copyRef() {
+  navigator.clipboard.writeText(`${APP_URL}/ref/${currentUser.referralCode}`).catch(()=>{});
+  const btn = document.getElementById('copy-ref-btn');
+  if (btn) { btn.textContent = '✅ Copied!'; btn.style.background='rgba(0,200,150,0.25)'; }
+  setTimeout(()=>{ if(btn){btn.textContent='📋 Copy Link';btn.style.background='rgba(0,200,150,0.1)';} }, 2000);
+}
+
+function shareWA() {
+  const link = `${APP_URL}/ref/${currentUser.referralCode}`;
+  const msg = `💰 *CryptoEarn Pro* — USDT Investment Platform!\n\n📦 *3 Investment Plans:*\n✅ Plan 1: $6–$20 → *2.0%/day*\n✅ Plan 2: $21–$50 → *2.3%/day*\n✅ Plan 3: $50+ → *2.5%/day*\n\n✅ Start with just *$${MIN_DEPOSIT}* minimum\n✅ Invite friends — earn *10% L1 + 5% L2 daily commission*\n\n🎟️ *My Referral Code:* \`${currentUser.referralCode}\`\n🔗 *Direct Join Link:*\n${link}\n\n📲 Register karo aur earning shuru karo!`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ─── Settings ─────────────────────────────────────────────────────────────────
+let settingsChangePassStep = 0; // 0=idle, 1=form shown
+
+function applyTheme(isDark) {
+  document.body.classList.remove('light-theme');
+}
+
+function renderSettings() {
+
+  const cpHtml = settingsChangePassStep === 1 ? `
+  <div class="card mb14" id="cp-form">
+    <div class="label" style="margin-bottom:12px;font-size:14px;font-weight:700">🔐 Change Password</div>
+    <input class="input" id="cp-cur" type="password" placeholder="Current password" style="margin-bottom:10px"/>
+    <input class="input" id="cp-new" type="password" placeholder="New password (min 6)" style="margin-bottom:10px"/>
+    <input class="input" id="cp-conf" type="password" placeholder="Confirm new password" style="margin-bottom:14px"/>
+    <div id="cp-err" style="color:#f87171;font-size:13px;margin-bottom:10px;display:none"></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-secondary" style="flex:1;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);font-family:inherit;font-size:14px" onclick="settingsChangePassStep=0;goTab('settings')">Cancel</button>
+      <button class="btn" style="flex:1;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px" onclick="doChangePassword()">Save</button>
+    </div>
+  </div>` : '';
+
+  return `
+  <div class="section-title">Settings</div>
+
+
+
+  ${cpHtml}
+
+  <div class="card mb14" style="padding:4px 8px">
+    <div class="setting-row" style="border:none;margin:0;cursor:pointer" onclick="settingsChangePassStep=1;goTab('settings')">
+      <div class="setting-row-left">
+        <span class="setting-icon">🔑</span>
+        <div>
+          <div class="setting-row-label">Change Password</div>
+          <div class="setting-row-sub">Update your account password</div>
+        </div>
+      </div>
+      <span style="color:rgba(255,255,255,0.35);font-size:20px">›</span>
+    </div>
+  </div>
+
+  <div class="card mb14" style="padding:4px 8px">
+    <div class="setting-row" style="border:none;margin:0">
+      <div class="setting-row-left">
+        <span class="setting-icon">👤</span>
+        <div>
+          <div class="setting-row-label">${currentUser.name}</div>
+          <div class="setting-row-sub">${currentUser.email}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb14" style="padding:4px 8px">
+    <div class="setting-row" style="border:none;margin:0;cursor:pointer" onclick="handleLogout()">
+      <div class="setting-row-left">
+        <span class="setting-icon">🚪</span>
+        <div>
+          <div class="setting-row-label" style="color:#f87171">Logout</div>
+          <div class="setting-row-sub">Sign out of your account</div>
+        </div>
+      </div>
+      <span style="color:rgba(255,255,255,0.35);font-size:20px">›</span>
+    </div>
+  </div>
+
+  <!-- About CryptoEarnPro -->
+  <div style="background:linear-gradient(135deg,rgba(0,200,150,0.08),rgba(108,99,255,0.08));border:1px solid rgba(0,200,150,0.2);border-radius:18px;padding:20px;margin-bottom:14px;text-align:center">
+    <div style="font-size:32px;margin-bottom:6px">🌍</div>
+    <div style="font-size:18px;font-weight:900;color:#00C896;letter-spacing:0.5px">CryptoEarn Pro</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:12px">Version 5.0 · Dubai, UAE</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.8;text-align:left;margin-bottom:14px">
+      🏙️ <b style="color:#f59e0b">Headquartered in Dubai, UAE</b> — a global leader in fintech innovation and blockchain regulation.<br/><br/>
+      🚀 <b style="color:#6c63ff">Vision 2027:</b> CryptoEarn Pro is on track to become a <b style="color:#fff">Top 10 Global Investment App</b>, expanding across 50+ countries with millions of active investors.<br/><br/>
+      🔒 <b style="color:#00C896">Secure · Transparent · Profitable</b> — built on BEP-20 (BSC) blockchain technology.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+      <div style="background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.2);border-radius:12px;padding:12px">
+        <div style="font-size:18px;font-weight:800;color:#00C896">2.0–2.5%</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.45)">Daily Profit</div>
+      </div>
+      <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:12px">
+        <div style="font-size:18px;font-weight:800;color:#f59e0b">Top 10</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.45)">Global 2027 Goal</div>
+      </div>
+      <div style="background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.2);border-radius:12px;padding:12px">
+        <div style="font-size:18px;font-weight:800;color:#6c63ff">5%+2%</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.45)">L1 + L2 Commission</div>
+      </div>
+      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:12px">
+        <div style="font-size:18px;font-weight:800;color:#f87171">7%</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.45)">Withdrawal Fee</div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.3)">© 2026 CryptoEarn Pro · Dubai, UAE · All Rights Reserved</div>
+  </div>
+  `;
+}
+
+function doChangePassword() {
+  const cur = document.getElementById('cp-cur').value.trim();
+  const nw  = document.getElementById('cp-new').value.trim();
+  const cf  = document.getElementById('cp-conf').value.trim();
+  const err = document.getElementById('cp-err');
+  const u   = users[currentUser.email];
+  if (!cur || !nw || !cf) { err.textContent='All fields required'; err.style.display='block'; return; }
+  if (u.password !== cur)  { err.textContent='Current password incorrect'; err.style.display='block'; return; }
+  if (nw.length < 6)        { err.textContent='New password must be at least 6 characters'; err.style.display='block'; return; }
+  if (nw !== cf)            { err.textContent='Passwords do not match'; err.style.display='block'; return; }
+  u.password = nw; saveUsers();
+  settingsChangePassStep = 0;
+  showNotif('Password changed successfully!', 'success');
+  goTab('settings');
+}
+
+// ─── History ──────────────────────────────────────────────────────────────────
+function showTxDetail(txId) {
+  const tx = currentUser.transactions.find(t => t.id == txId);
+  if (!tx) return;
+  const icons = { deposit:'⬇️', profit:'💹', withdraw:'⬆️', referral:'🤝', deduct:'⚠️' };
+  const isOut = tx.type==='withdraw' || tx.type==='deduct';
+  const statusColors = { confirmed:'#00C896', credited:'#00C896', pending:'#f59e0b', rejected:'#ef4444' };
+  const statusColor = statusColors[tx.status] || '#f59e0b';
+
+  const rows = [
+    { label: 'Transaction Type', value: `${icons[tx.type]||'💱'} ${tx.type.charAt(0).toUpperCase()+tx.type.slice(1)}` },
+    { label: 'Amount', value: `${isOut?'-':'+'}$${tx.amount}` },
+    tx.netAmount ? { label: 'Net Amount (after 7% fee)', value: `$${tx.netAmount}` } : null,
+    tx.tax ? { label: 'Tax Deducted', value: `$${tx.tax}` } : null,
+    { label: 'Status', value: `<span style="color:${statusColor};font-weight:700">${tx.status.toUpperCase()}</span>` },
+    { label: 'Date & Time', value: tx.date || 'N/A' },
+    tx.txHash && tx.txHash !== '-' ? { label: 'TX Hash', value: `<span style="font-size:11px;color:rgba(0,200,150,0.8)">${tx.txHash}</span>` } : null,
+    tx.walletAddress ? { label: 'Wallet Address', value: `<span style="font-size:11px">${tx.walletAddress}</span>` } : null,
+    tx.note ? { label: 'Note', value: `<span style="color:#f59e0b">${tx.note}</span>` } : null,
+    { label: 'Transaction ID', value: `<span style="font-size:11px;color:rgba(255,255,255,0.35)">#${tx.id}</span>` },
+  ].filter(Boolean);
+
+  const modal = document.createElement('div');
+  modal.className = 'tx-detail-modal';
+  modal.id = 'txDetailModal';
+  modal.innerHTML = `
+    <div class="tx-detail-sheet">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:17px;font-weight:800">Transaction Details</div>
+        <button onclick="document.getElementById('txDetailModal').remove()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+      </div>
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:44px;margin-bottom:6px">${icons[tx.type]||'💱'}</div>
+        <div style="font-size:28px;font-weight:900;color:${isOut?'#ef4444':'#00C896'}">${isOut?'-':'+'}$${tx.amount}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px">${tx.type.charAt(0).toUpperCase()+tx.type.slice(1)}</div>
+      </div>
+      ${rows.map(r=>`
+      <div class="tx-detail-row">
+        <span class="tx-detail-label">${r.label}</span>
+        <span class="tx-detail-value">${r.value}</span>
+      </div>`).join('')}
+      ${tx.walletAddress ? `
+      <button onclick="navigator.clipboard.writeText('${tx.walletAddress}').then(()=>showNotif('Address copied!'))" style="width:100%;margin-top:16px;background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.3);color:#00C896;border-radius:12px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">📋 Copy Wallet Address</button>` : ''}
+      ${tx.txHash && tx.txHash !== '-' && !tx.txHash.startsWith('Admin') && !tx.txHash.startsWith('Team') ? `
+      <button onclick="navigator.clipboard.writeText('${tx.txHash}').then(()=>showNotif('TX Hash copied!'))" style="width:100%;margin-top:10px;background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.3);color:#6c63ff;border-radius:12px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">📋 Copy TX Hash</button>` : ''}
+    </div>`;
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function renderHistory() {
+  return `
+  <div class="section-title">Transaction History</div>
+  ${currentUser.transactions.length===0?`<div class="empty-state">No transactions yet</div>`:
+    currentUser.transactions.map(tx=>txRow(tx,true)).join('')}`;
+}
+
+function txRow(tx, full) {
+  const icons = { deposit:'⬇️', profit:'💹', withdraw:'⬆️', referral:'🤝', deduct:'⚠️' };
+  const isOut = tx.type==='withdraw' || tx.type==='deduct';
+  const statusOk = ['confirmed','credited'].includes(tx.status);
+  const statusRej = tx.status==='rejected';
+  return `
+  <div class="tx-row" onclick="showTxDetail(${tx.id})">
+    <div class="tx-inner">
+      <div class="tx-left">
+        <div class="tx-icon ${isOut?'out':'in'}">${icons[tx.type]||'💱'}</div>
+        <div>
+          <div class="tx-type">${tx.type}</div>
+          <div class="tx-date">${tx.date}</div>
+        </div>
+      </div>
+      <div>
+        <div class="tx-amount ${isOut?'out':'in'}">${isOut?'-':'+'}$${tx.amount}${isOut && tx.netAmount ? ` <span style="font-size:10px;color:rgba(255,255,255,0.4)">(Net: $${tx.netAmount})</span>` : ''}</div>
+        <span class="tx-status ${statusOk?'ok':statusRej?'':'pending'}" style="${statusRej?'background:rgba(239,68,68,0.12);color:#ef4444':''}">
+          ${tx.status}
+        </span>
+      </div>
+    </div>
+    ${full&&tx.txHash&&tx.txHash!=='-'?`<div class="tx-hash">TX: ${tx.txHash}</div>`:''}
+    ${tx.note?`<div class="tx-hash" style="color:rgba(245,158,11,0.7)">Note: ${tx.note}</div>`:''}
+  </div>`;
+}
+
+// ─── Navigation ───────────────────────────────────────────────────────────────
+function renderBottomNav() {
+  const items = [
+    {id:'dashboard', icon:'🏠', label:'Home'},
+    {id:'deposit',   icon:'⬇️', label:'Deposit'},
+    {id:'withdraw',  icon:'⬆️', label:'Withdraw'},
+    {id:'referral',  icon:'🤝', label:'Referral'},
+    {id:'history',   icon:'📋', label:'History'},
+    {id:'settings',  icon:'⚙️', label:'Settings'},
+  ];
+  return `<div id="bottom-nav">
+    ${items.map(it=>`
+    <button class="nav-item ${tab===it.id?'active':''}" onclick="goTab('${it.id}')" id="nav-${it.id}">
+      <span class="nav-icon">${it.icon}</span>
+      <span class="nav-label">${it.label}</span>
+      ${tab===it.id?'<div class="nav-dot"></div>':''}
+    </button>`).join('')}
+  </div>`;
+}
+
+function updateNav() {
+  ['dashboard','deposit','withdraw','referral','history','settings'].forEach(id => {
+    const el = document.getElementById(`nav-${id}`);
+    if (!el) return;
+    el.className = `nav-item ${tab===id?'active':''}`;
+    const dot = el.querySelector('.nav-dot');
+    if (tab===id && !dot) el.insertAdjacentHTML('beforeend','<div class="nav-dot"></div>');
+    if (tab!==id && dot) dot.remove();
+    const lbl = el.querySelector('.nav-label');
+    if (lbl) lbl.style.color = tab===id?'#00C896':'';
+  });
+}
+
+let _countdownInterval = null;
+function startCountdownTimer() {
+  if (_countdownInterval) clearInterval(_countdownInterval);
+  const isSubscribed = currentUser.subscribedPlan !== null && currentUser.subscribedPlan !== undefined;
+  if (!isSubscribed) return;
+  _countdownInterval = setInterval(() => {
+    const el = document.getElementById('profit-countdown');
+    if (!el) { clearInterval(_countdownInterval); return; }
+    const sec = getNextProfitSeconds();
+    if (sec === null) { clearInterval(_countdownInterval); return; }
+    if (sec <= 0) {
+      clearInterval(_countdownInterval);
+      checkAndAddProfit();
+      render();
+      return;
+    }
+    const h = Math.floor(sec/3600);
+    const m = Math.floor((sec%3600)/60);
+    const s = sec%60;
+    el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+}
+
+function goTab(t) {
+  tab = t;
+  const header = document.getElementById('header');
+  if (header) {
+    const page = document.querySelector('.page');
+    const plan    = getPlan(currentUser.balance);
+    const daily   = getDailyProfit(currentUser.balance).toFixed(2);
+    const monthly = (getDailyProfit(currentUser.balance) * 30).toFixed(2);
+    if (page) {
+      if (tab==='dashboard' && isAdmin()) { page.innerHTML = renderAdminPanel(); }
+      else {
+        page.innerHTML =
+          tab==='dashboard' ? renderDashboard(plan, daily, monthly) :
+          tab==='deposit'   ? renderDeposit()  :
+          tab==='withdraw'  ? renderWithdraw() :
+          tab==='referral'  ? renderReferral() :
+          tab==='settings'  ? renderSettings() :
+          renderHistory();
+      }
+    }
+    updateNav();
+  } else { render(); }
+  window.scrollTo(0,0);
+}
+
+function handleLogout() {
+  currentUser = null; clearSession();
+  authMode = 'login'; tab = 'dashboard'; showPassAuth = false;
+  const nav = document.getElementById('bottom-nav');
+  if (nav) nav.remove();
+  render();
+}
+
+// ─── PWA Install ──────────────────────────────────────────────────────────────
+let deferredPrompt = null;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); deferredPrompt = e;
+  if (!isInStandalone) setTimeout(() => document.getElementById('install-banner').classList.remove('hidden'), 2000);
+});
+
+function doInstall() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; dismissInstall(); });
+}
+function dismissInstall() { document.getElementById('install-banner').classList.add('hidden'); }
+
+if (isIOS && !isInStandalone) {
+  setTimeout(() => {
+    const alreadyShown = sessionStorage.getItem('ios_guide_shown');
+    if (!alreadyShown) { document.getElementById('ios-guide').classList.remove('hidden'); sessionStorage.setItem('ios_guide_shown','1'); }
+  }, 3000);
+}
+
+// ─── Enhanced Service Worker (Offline Cache) ──────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+// ─── Splash Screen ────────────────────────────────────────────────────────────
+(function initSplash() {
+  // Generate floating particles
+  const container = document.getElementById('splash-particles');
+  if (container) {
+    const colors = ['#00C896','#0099ff','#f59e0b','#7c3aed','#00e5ff'];
+    for (let i = 0; i < 28; i++) {
+      const p = document.createElement('div');
+      p.className = 'splash-particle';
+      const size = Math.random() * 8 + 3;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const left = Math.random() * 100;
+      const duration = Math.random() * 8 + 6;
+      const delay = Math.random() * 8;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${left}%;
+        background:${color};
+        opacity:0.5;
+        animation-duration:${duration}s;
+        animation-delay:-${delay}s;
+        filter: blur(${Math.random() > 0.5 ? '1px' : '0px'});
+      `;
+      container.appendChild(p);
+    }
+  }
+  // Hide splash after 2.4 seconds
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    if (splash) {
+      splash.classList.add('hide');
+      setTimeout(() => { if (splash) splash.remove(); }, 700);
+    }
+  }, 2400);
+})();
+
+render();
+// Firebase se latest data sync karo
+loadUsersFromFirebase();
+</script>
+</body>
+</html>
