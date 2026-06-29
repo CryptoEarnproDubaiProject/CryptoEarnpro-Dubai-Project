@@ -1218,7 +1218,7 @@ async function handleLogin() {
 
 async function handleRegister() {
   const name  = (document.getElementById('a-name')?.value||'').trim();
-  const email = (document.getElementById('a-email')?.value||'').toLowerCase().trim();
+  let email = (document.getElementById('a-email')?.value||'').toLowerCase().trim();
   const pass  = document.getElementById('a-pass')?.value||'';
   const ref   = (document.getElementById('a-ref')?.value||'').trim().replace(/[-\s]/g,'').toUpperCase();
 
