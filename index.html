@@ -720,7 +720,7 @@ function getNextProfitSeconds() {
   return remaining > 0 ? Math.floor(remaining / 1000) : 0;
 }
 const DEPOSIT_ADDRESS = "0x2c31f7b60ecb741b549968227e7cfb76e3764950";
-const APP_URL        = "https://cryptoearnprodubaiproject.github.io/CryptoEarnpro-Dubai-Project";
+const APP_URL        = "https://verdant-froyo-8e791d.netlify.app";
 // Admin credentials — hardcoded as hashes only (asli email/password file mein nahi)
 const _ADMIN_EMAIL_HASH = 'eaab503946abcf894a7edf7dfc58a9fe65397c8ca5c2bb206d63b47b98a4d31a';
 const _ADMIN_HASH       = '0e34946b49e2dcf1c44a5b48df8912ba315231c914114c97d516c876ea706e72';
@@ -1218,7 +1218,7 @@ async function handleLogin() {
 
 async function handleRegister() {
   const name  = (document.getElementById('a-name')?.value||'').trim();
-  let email = (document.getElementById('a-email')?.value||'').toLowerCase().trim();
+  const email = (document.getElementById('a-email')?.value||'').toLowerCase().trim();
   const pass  = document.getElementById('a-pass')?.value||'';
   const ref   = (document.getElementById('a-ref')?.value||'').trim().replace(/[-\s]/g,'').toUpperCase();
 
@@ -2346,11 +2346,22 @@ function handleDeposit() {
 }
 
 // ─── Withdraw ─────────────────────────────────────────────────────────────────
+function getWithdrawTeamRequirement(myDeposit) {
+  return myDeposit >= 200 ? 300 : 50;
+}
+
 function renderWithdraw() {
   const u = users[currentUser.email] || currentUser;
   const locked = computeLockedBalance(u);
   const available = Math.max(0, (currentUser.balance || 0) - locked);
   const hasLock = locked > 0;
+
+  const myDeposit = u.totalDeposit || 0;
+  const teamDeposit = getTeamTotalDeposit(currentUser.email);
+  const teamRequired = getWithdrawTeamRequirement(myDeposit);
+  const teamOk = teamDeposit >= teamRequired;
+  const teamShort = Math.max(0, teamRequired - teamDeposit);
+
   return `
   <div class="section-title">Withdraw</div>
   <div class="section-sub">Minimum withdrawal: $${MIN_WITHDRAW} USDT (BEP-20)</div>
@@ -2366,20 +2377,28 @@ function renderWithdraw() {
     🔒 <b style="color:#f59e0b">$${locked.toFixed(2)} Locked</b> — 50% of your deposit is locked for 15 days from deposit date<br/>
     <span style="color:rgba(255,255,255,0.45);margin-top:4px;display:block">✅ Available to withdraw now: <b style="color:#00C896">$${available.toFixed(2)}</b></span>
   </div>` : ''}
+  <div style="background:${teamOk ? 'rgba(0,200,150,0.08)' : 'rgba(239,68,68,0.08)'};border:1px solid ${teamOk ? 'rgba(0,200,150,0.3)' : 'rgba(239,68,68,0.3)'};border-radius:12px;padding:14px;margin-bottom:14px">
+    <div style="font-weight:800;font-size:13px;color:${teamOk ? '#00C896' : '#ef4444'};margin-bottom:8px">${teamOk ? '✅ Team Deposit Requirement Met' : '🔒 Team Deposit Requirement'}</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.6">
+      Your deposit: <b style="color:#fff">$${myDeposit.toFixed(2)}</b> → Required team (L1+L2) deposit: <b style="color:#fff">$${teamRequired}</b><br/>
+      Your current team deposit: <b style="color:${teamOk ? '#00C896' : '#fff'}">$${teamDeposit.toFixed(2)}</b>
+      ${!teamOk ? `<br/><span style="color:#ef4444;font-weight:700">⚠️ Need $${teamShort.toFixed(2)} more team deposit to unlock withdrawal</span>` : ''}
+    </div>
+  </div>
   <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:rgba(255,255,255,0.65)">
     ⚠️ <b style="color:#ef4444">7% Withdrawal Fee</b> is applied — a 7% fee will be deducted from your requested amount
   </div>
   <div class="mb14">
     <label class="label">Withdraw Amount (USD) — Available: $${available.toFixed(2)}</label>
-    <input class="input" id="wd-amt" type="number" inputmode="decimal" placeholder="Min. $${MIN_WITHDRAW}" oninput="updateWdCalc()" />
+    <input class="input" id="wd-amt" type="number" inputmode="decimal" placeholder="Min. $${MIN_WITHDRAW}" oninput="updateWdCalc()" ${teamOk ? '' : 'disabled'} />
   </div>
   <div id="wd-calc" style="display:none;background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.25);border-radius:12px;padding:14px;margin-bottom:14px"></div>
   <div class="mb22">
     <label class="label">Your BEP-20 Wallet Address</label>
-    <input class="input" id="wd-addr" type="text" placeholder="0x..." />
+    <input class="input" id="wd-addr" type="text" placeholder="0x..." ${teamOk ? '' : 'disabled'} />
     <div class="warn-hint">⚠️ BEP-20 (BSC) only — wrong address = permanent loss</div>
   </div>
-  <button class="btn-primary btn-purple" onclick="handleWithdraw()">Submit Withdrawal</button>
+  <button class="btn-primary btn-purple" onclick="handleWithdraw()" ${teamOk ? '' : 'disabled style="opacity:0.4;cursor:not-allowed"'}>${teamOk ? 'Submit Withdrawal' : `🔒 Locked — Need $${teamShort.toFixed(2)} More Team Deposit`}</button>
   <div class="info-red">
     ⏱ Processing time: up to 24 hours<br/>
     🔒 Double-check your BEP-20 address<br/>
@@ -2411,8 +2430,16 @@ function handleWithdraw() {
   if (!amt||amt<MIN_WITHDRAW) return showNotif(`Minimum withdrawal is $${MIN_WITHDRAW}`, 'error');
   if (!addr||!addr.startsWith('0x')) return showNotif("Please enter a valid BEP-20 address", 'error');
 
-  // Enforce 50% deposit lock: only freely available balance can be withdrawn
+  // Enforce team deposit requirement (cannot be bypassed by re-enabling disabled inputs)
   const u = users[currentUser.email];
+  const myDeposit = u.totalDeposit || 0;
+  const teamDeposit = getTeamTotalDeposit(currentUser.email);
+  const teamRequired = getWithdrawTeamRequirement(myDeposit);
+  if (teamDeposit < teamRequired) {
+    return showNotif(`🔒 Withdraw locked: aapki team deposit $${teamDeposit.toFixed(2)} hai, $${teamRequired} chahiye (aapka deposit $${myDeposit.toFixed(2)} hai).`, 'error');
+  }
+
+  // Enforce 50% deposit lock: only freely available balance can be withdrawn
   const locked = computeLockedBalance(u);
   const available = Math.max(0, (currentUser.balance || 0) - locked);
   if (amt > available) {
