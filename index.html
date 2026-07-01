@@ -2347,7 +2347,9 @@ function handleDeposit() {
 
 // ─── Withdraw ─────────────────────────────────────────────────────────────────
 function getWithdrawTeamRequirement(myDeposit) {
-  return myDeposit >= 200 ? 300 : 50;
+  if (myDeposit > 200) return 200;
+  if (myDeposit >= 101) return 50;
+  return 30; // deposit < $100
 }
 
 function renderWithdraw() {
@@ -2377,6 +2379,12 @@ function renderWithdraw() {
     🔒 <b style="color:#f59e0b">$${locked.toFixed(2)} Locked</b> — 50% of your deposit is locked for 15 days from deposit date<br/>
     <span style="color:rgba(255,255,255,0.45);margin-top:4px;display:block">✅ Available to withdraw now: <b style="color:#00C896">$${available.toFixed(2)}</b></span>
   </div>` : ''}
+  <div style="background:rgba(108,99,255,0.07);border:1px solid rgba(108,99,255,0.2);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:11px;color:rgba(255,255,255,0.55);line-height:1.8">
+    📋 <b style="color:rgba(255,255,255,0.8)">Team Deposit Rules:</b><br/>
+    • Apna deposit &lt; $100 → Team deposit <b style="color:#fff">$30</b> chahiye<br/>
+    • Apna deposit $101–$200 → Team deposit <b style="color:#fff">$50</b> chahiye<br/>
+    • Apna deposit $200+ → Team deposit <b style="color:#fff">$200</b> chahiye
+  </div>
   <div style="background:${teamOk ? 'rgba(0,200,150,0.08)' : 'rgba(239,68,68,0.08)'};border:1px solid ${teamOk ? 'rgba(0,200,150,0.3)' : 'rgba(239,68,68,0.3)'};border-radius:12px;padding:14px;margin-bottom:14px">
     <div style="font-weight:800;font-size:13px;color:${teamOk ? '#00C896' : '#ef4444'};margin-bottom:8px">${teamOk ? '✅ Team Deposit Requirement Met' : '🔒 Team Deposit Requirement'}</div>
     <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.6">
